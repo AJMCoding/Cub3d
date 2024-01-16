@@ -6,7 +6,7 @@
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:17:26 by fstark            #+#    #+#             */
-/*   Updated: 2024/01/16 12:53:27 by fstark           ###   ########.fr       */
+/*   Updated: 2024/01/16 18:56:59 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 
+/*
 # define IMG_HEIGHT			32
 # define IMG_WIDTH			32
 
@@ -42,7 +43,7 @@
 # define PRESS_S			115
 # define PRESS_D			100
 # define PRESS_A			97
-# define PRESS_ESC			65307
+# define PRESS_ESC			65307*/
 
 typedef struct s_position
 {
@@ -73,8 +74,8 @@ typedef struct s_free
 typedef struct s_image
 {
 	void	*xpm_ptr;
-	int		x;
-	int		y;
+	int		width;
+	int		height;
 }	t_image;
 
 typedef struct s_colour
@@ -118,5 +119,8 @@ typedef struct s_game
 void	ft_check_input(int argc, char **argv, t_game *game);
 int		ft_error_msg(char *message, t_game *game);
 void	ft_read_map(t_game *game, char *argv);
+char	*ft_strldup(char *s, size_t len);
+int		find_sprites(t_game *game, char *str);
+void	ft_find_images(t_game *game);
 
 #endif

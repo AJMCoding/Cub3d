@@ -1,53 +1,21 @@
 #include "cub3d.h"
+#include "libft/libft.h"
 
 //NO SO WE EA F C
 
-int	compare_to_identifier(char *str, int i)
+void	find_map(t_game *game, char *str, int i)
 {
-	if (str[i] == 'N' && str[i + 1] == 'O' && str[i + 2] == ' ')
-		return (1);
-	if (str[i] == 'S' && str[i + 1] == 'O' && str[i + 2] == ' ')
-		return (1);
-	if (str[i] == 'W' && str[i + 1] == 'E' && str[i + 2] == ' ')
-		return (1);
-	if (str[i] == 'E' && str[i + 1] == 'A' && str[i + 2] == ' ')
-		return (1);
-	if (str[i] == 'F' && str[i + 1] == ' ')
-		return (2);
-	if (str[i] == 'C' && str[i + 1] == ' ')
-		return (2);
-	return (0);
-}
-
-void	add_image(t_game *game, char *str, int i)
-{
-	
-}
-
-void	add_colour(t_game *game, char *str, int i)
-{
-
-}
-
-void	find_sprites(t_game *game, char *str)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	while (str[i])
+	char *str2;
+	while (str[i] != '\0')
 	{
-		if (str[i] == '\n')
-		{
-			i++;
-			if (compare_to_identifier(str, i) == 1)
-				add_image(game, str, i);
-			else if (compare_to_identifier(str, i) == 2)
-				add_colour(game, str, i);
-		}
+		if (str[i] == '1' || str[i] == '0' || str[i] == 'N' || str[i] == 'S' || str[i] == 'W' || str[i] == 'E')
+			break ;
 		i++;
 	}
+	while (str[i] != '\n')
+		i--;
+	str2 = ft_strldup(str + i, ft_strlen(str + i));
+	game->map.full = ft_split(str2, '\n');
 }
 
 char	*read_map2(int fd)
@@ -81,7 +49,7 @@ void	ft_read_map(t_game *game, char *argv)
 {
 	char	*str;
 	int		fd;
-	//int		i;
+	int		i;
 
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
@@ -90,6 +58,19 @@ void	ft_read_map(t_game *game, char *argv)
 	close(fd);
 	if (str == NULL)
 		ft_error_msg("Error while reading the map.", game);
-	find_sprites(game, str);
-	printf("%s\n", str);
+	i = find_sprites(game, str);
+	find_map(game, str, i);
+	
+	printf("floor: %d %d %d\n", game->locations.floor.red, game->locations.floor.green, game->locations.floor.blue);
+	printf("ceiling: %d %d %d\n", game->locations.ceiling.red, game->locations.ceiling.green, game->locations.ceiling.blue);
+	printf("north: %s\n", game->locations.north);
+	printf("south: %s\n", game->locations.south);
+	printf("west: %s\n", game->locations.west);
+	printf("east: %s\n", game->locations.east);
+	int p = 0;
+	while (game->map.full[p] != NULL)
+	{
+		printf("%s\n", game->map.full[p]);
+		p++;
+	}
 }
