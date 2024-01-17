@@ -5,9 +5,9 @@ CC				=	cc
 RM				=	rm -rf
 CFLAGS			=	-Wall -Wextra -Werror -g #-fsanitize=address,leak,undefined
 FLAGS			=	-lreadline
-MINILIBX_FLAGS	=	-lmlx -lXext -lX11
+MINILIBX_FLAGS	=	-lmlx -lXext -lX11 -lm
 
-SRCS            =	main.c ft_check_input.c ft_close_game.c ft_read_map.c ft_utils.c ft_find_sprites.c ft_find_images.c\
+SRCS            =	main.c ft_check_input.c ft_close_game.c ft_read_map.c ft_utils.c ft_find_sprites.c ft_find_images.c raycasting.c\
 
 OBJ_DIR				=	obj
 OBJS				=	$(SRCS:%.c=$(OBJ_DIR)/%.o)

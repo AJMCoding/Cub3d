@@ -18,7 +18,7 @@ void	free_allocated_memory(t_game *game)
 	str = 0;
 	if (game->free.malloc_map == 1)
 	{
-		while (str < game->map.columns)
+		while (game->map.full[str] != NULL)
 			free(game->map.full[str++]);
 		free(game->map.full);
 	}
