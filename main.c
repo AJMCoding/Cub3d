@@ -43,49 +43,38 @@ void	ft_init_win(t_game *game)
 	game->free.malloc_window = 1;
 }
 
-void	init_player(t_game *game)
+int	convert_color(t_colour color)
 {
-	game->pl.dir.x = 0.5; // set while parsing map 
-	game->pl.dir.y = 0.5; // set while parsing map
-	game->pl.plane.x = 0;
-	game->pl.plane.y = 0.66;
-	game->pl.pos.x = 2; // set while parsing map
-	game->pl.pos.y = 5; // set while parsing map
+	int rgb;
+
+	rgb = color.red;
+	rgb = (rgb << 8) + color.green;
+	rgb = (rgb << 8) + color.blue;
+	return (rgb);
 }
 
-void	rotate_camera(t_game *game, int direction)
-{
-	double oldDirX;
-	double rotSpeed;
-	printf("hi");
 
-	rotSpeed = 0.2;
-	oldDirX = game->pl.dir.x;
-	if (direction == 0)
-	{
-		game->pl.dir.x = game->pl.dir.x * cos(rotSpeed) - game->pl.dir.y * sin(rotSpeed);
-		game->pl.dir.y = oldDirX * sin(rotSpeed) + game->pl.dir.y * cos(rotSpeed);
-		printf("dir_x: %f dir_y: %f\n", game->pl.dir.x, game->pl.dir.y);
-	}
-	if (direction == 1)
-	{
-		game->pl.dir.x = game->pl.dir.x * cos(-rotSpeed) - game->pl.dir.y * sin(-rotSpeed);
-		game->pl.dir.y = oldDirX * sin(-rotSpeed) + game->pl.dir.y * cos(-rotSpeed);
-		printf("dir_x: %f dir_y: %f\n", game->pl.dir.x, game->pl.dir.y);
-	}
-}
 
-int	manage_inputs(int keysym, t_game *game)
+void	init_images_colours(t_game *game)
 {
-	printf("key: %d\n", keysym);
-	if (keysym == PRESS_A)
-		rotate_camera(game, 0);
-	if (keysym == PRESS_D)
-		rotate_camera(game, 1);
-	if (keysym == PRESS_ESC)
-		close_game(game);
-	raycasting(game);
-	return (0);
+	game->images.floor = convert_color(game->locations.floor);
+	game->images.ceiling = convert_color(game->locations.ceiling);
+	game->images.west.xpm_ptr = mlx_xpm_file_to_image(game->mlx_ptr, 
+	game->locations.west , &game->images.west.width, &game->images.west.height);
+	if (game->images.west.xpm_ptr == NULL)
+		ft_error_msg("Couldn't find the west texture.", game);
+	game->images.east.xpm_ptr = mlx_xpm_file_to_image(game->mlx_ptr, 
+	game->locations.east , &game->images.east.width, &game->images.east.height);
+	if (game->images.east.xpm_ptr == NULL)
+		ft_error_msg("Couldn't find the east texture.", game);
+	game->images.north.xpm_ptr = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->locations.north , &game->images.north.width, &game->images.north.height);
+	if (game->images.north.xpm_ptr == NULL)
+		ft_error_msg("Couldn't find the north texture.", game);
+	game->images.south.xpm_ptr = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->locations.south , &game->images.south.width, &game->images.south.height);
+	if (game->images.south.xpm_ptr == NULL)
+		ft_error_msg("Couldn't find the south texture.", game);
 }
 
 int	main(int argc, char	**argv)
@@ -102,13 +91,12 @@ int	main(int argc, char	**argv)
 	ft_init_locations(game);
 	ft_check_input(argc, argv, game);
 	ft_read_map(game, argv[1]);
-	//ft_check_map(game);
+	ft_check_map(game);
 	ft_init_mlx(game);
-	init_player(game);
-	ft_find_images(game);
 	ft_init_win(game);
+	init_images_colours(game);
 	raycasting(game);
 	mlx_hook(game->win_ptr, DestroyNotify, ButtonPressMask, close_game, game);
-	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, manage_inputs, game);
+	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, manage_input, game);
 	mlx_loop(game->mlx_ptr);
 }

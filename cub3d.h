@@ -6,7 +6,7 @@
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:17:26 by fstark            #+#    #+#             */
-/*   Updated: 2024/01/17 16:42:03 by fstark           ###   ########.fr       */
+/*   Updated: 2024/01/18 18:53:51 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,9 @@
 
 # define WIN_HEIGHT			540
 # define WIN_WIDTH			960
-/*
-# define WALL				'1'
-# define FLOOR 				'0'
-# define COIN	  			'C'
-# define PLAYER				'P'
-# define EXIT 		 		'E'
-# define FILLER				'N'
-
-# define WALL_XPM			"textures/wall.xpm"
-# define FLOOR_XPM			"textures/floor.xpm"
-# define COINS_XPM			"textures/coin-bag.xpm"
-# define PLAYER_XPM			"textures/player.xpm"
-# define EXIT_XPM			"textures/exit.xpm"
 
 # define PRESS_W			119
-# define PRESS_S			115*/
+# define PRESS_S			115
 # define PRESS_D			100
 # define PRESS_A			97
 # define PRESS_ESC			65307
@@ -101,8 +88,8 @@ typedef struct s_images
 	t_image		east;
 	t_image		north;
 	t_image		south;
-	t_colour	floor;
-	t_colour	ceiling;
+	int			floor;
+	int			ceiling;
 }	t_images;
 
 typedef struct s_game
@@ -123,6 +110,10 @@ typedef struct s_ray
 	double dir_y;
 	int map_x;
 	int map_y;
+	int num;
+	double distance;
+	double pixel;
+	int	direction;
 }	t_ray;
 
 typedef struct	s_data2 {
@@ -138,8 +129,9 @@ int		ft_error_msg(char *message, t_game *game);
 void	ft_read_map(t_game *game, char *argv);
 char	*ft_strldup(char *s, size_t len);
 int		find_sprites(t_game *game, char *str);
-void	ft_find_images(t_game *game);
-int	close_game(t_game *game);
+int		close_game(t_game *game);
 void	raycasting(t_game *game);
+void	ft_check_map(t_game *game);
+int		manage_input(int keysym, t_game *game);
 
 #endif
