@@ -6,7 +6,7 @@
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:17:26 by fstark            #+#    #+#             */
-/*   Updated: 2024/01/18 18:53:51 by fstark           ###   ########.fr       */
+/*   Updated: 2024/01/22 15:49:02 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@
 # define PRESS_A			97
 # define PRESS_ESC			65307
 
+typedef struct	s_data2 {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data2;
 typedef struct s_position
 {
 	double	x;
@@ -85,9 +92,13 @@ typedef struct s_locations
 typedef struct s_images
 {
 	t_image		west;
+	t_data2		west_data;
 	t_image		east;
+	t_data2		east_data;
 	t_image		north;
+	t_data2		north_data;
 	t_image		south;
+	t_data2		south_data;
 	int			floor;
 	int			ceiling;
 }	t_images;
@@ -115,14 +126,6 @@ typedef struct s_ray
 	double pixel;
 	int	direction;
 }	t_ray;
-
-typedef struct	s_data2 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data2;
 
 void	ft_check_input(int argc, char **argv, t_game *game);
 int		ft_error_msg(char *message, t_game *game);

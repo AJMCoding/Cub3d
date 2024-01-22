@@ -32,11 +32,11 @@ void	change_player_pos(t_game *game, int direction)
 {
 	if (game->map.full[(int)(game->pl.pos.x + direction * game->pl.dir.x * 0.21)][(int)(game->pl.pos.y + direction * game->pl.dir.y * 0.21)] == '1')
 		return ;
-	if (game->map.full[(int)(game->pl.pos.x + direction * game->pl.dir.x * 0.10)][(int)(game->pl.pos.y + direction * game->pl.dir.y * 0.21)] == '1')
+	if (game->map.full[(int)(game->pl.pos.x + direction * game->pl.dir.x * 0.10)][(int)(game->pl.pos.y + direction * game->pl.dir.y * 0.10)] == '1')
 		return ;
 	game->pl.pos.x += direction * game->pl.dir.x * 0.2;
 	game->pl.pos.y += direction * game->pl.dir.y * 0.2;
-	printf("pos_x: %f pos_y: %f\n", game->pl.pos.x, game->pl.pos.y);
+	//printf("pos_x: %f pos_y: %f\n", game->pl.pos.x, game->pl.pos.y);
 }
 
 int	manage_input(int keysym, t_game *game)

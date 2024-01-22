@@ -126,7 +126,7 @@ t_ray	calculate_distance_to_wall(t_game *game, t_ray ray)
 			ray.direction = 4;//west
 	}
 	//ray.direction = side;
-	printf("ray.direction: %d\n dir: x: %f y: %f\n", ray.direction, ray.dir_x, ray.dir_y);
+	//printf("ray.direction: %d\n dir: x: %f y: %f\n", ray.direction, ray.dir_x, ray.dir_y);
 	//printf("wallX: %f\n", wallX);
 
 	//printf("found map wall at: %d, %d value: %c distance: %f \n", ray.map_x, ray.map_y, game->map.full[ray.map_x][ray.map_y], perpWallDist);
@@ -160,24 +160,70 @@ void	draw_wall(int rays, double distance, t_data2 img)
 	}
 }*/
 
-void	draw_wall(int rays, t_ray ray, t_data2 img)
+int	my_mlx_pixel_get(t_data2 *data, int x, int y)
+{
+	char	*dst;
+	int		color;
+	
+	//printf("x: %d y: %d\n", x, y);
+
+	//printf("bits_per_pixel: %d\n", data->bits_per_pixel);
+	dst = data->addr + ((y)* (data->bits_per_pixel / 8) + (x * 64) * (data->bits_per_pixel / 8));
+	color = *(unsigned int*)dst;
+	//printf("color: %d\n at pos x:%d y:%d, adress: %d\n", color, x, y, (y + (x * 64)));
+	return (color);
+}
+
+void	put_part_of_texture(t_ray ray, int start, int x_at_wall, t_data2 img, t_game *game)
+{
+	int height;
+	int color;
+	
+	height = (int)((WIN_HEIGHT / ray.distance) * 0.8);
+	//printf("color: %d\n", color);
+	color = 0x00FF00;
+	if (ray.direction == 1)
+		color = my_mlx_pixel_get(&game->images.north_data, (x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
+	if (ray.direction == 2)
+		color = my_mlx_pixel_get(&game->images.east_data, (x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
+	if (ray.direction == 3)
+		color = my_mlx_pixel_get(&game->images.south_data, (x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
+	if (ray.direction == 4)
+		color = my_mlx_pixel_get(&game->images.west_data, (x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
+
+	//printf("start: %d height: %d\n", start, height);
+	my_mlx_pixel_put(&img, ray.num, start, color);
+}
+
+void	draw_wall(t_ray ray, t_data2 img, t_game *game)
 {
 	int height;
 	int start;
 	int end;
+	int i;
 
+	//(void)game;
+	i = 0;
 	height = (int)((WIN_HEIGHT / ray.distance) * 0.8);
+
 	start = -height / 2 + WIN_HEIGHT / 2;
 	if(start < 0) 
 		start = 0;
 	end = height / 2 + WIN_HEIGHT / 2;
 	if(end >= WIN_HEIGHT)
 		end = WIN_HEIGHT - 1;
+	if (height > WIN_HEIGHT)
+	{
+		i = (height - WIN_HEIGHT) / 2;
+	}
 	//printf("ray: %d start: %d end: %d\n", rays, start, end);
 	while (start < end)
 	{
-		my_mlx_pixel_put(&img, rays, start, 0x00FF00);
+		//my_mlx_pixel_put(&img, ray.num, start, 0x00FF00);
+		//printf("ray.pixel: %f\n", ray.pixel);
+		put_part_of_texture(ray, start, height - i, img, game);
 		start++;
+		i++;
 	}
 }
 
@@ -219,7 +265,8 @@ void	raycasting(t_game *game)
 		//calculate distance to wall
 		ray = calculate_distance_to_wall(game, ray);
 		//draw the wall
-		draw_wall(rays, ray, img);
+		//printf("ray.pixel: %f\n", ray.pixel);
+		draw_wall(ray, img, game);
 		rays ++;
 	}
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, img.img, 0, 0);

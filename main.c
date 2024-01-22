@@ -1,4 +1,5 @@
 #include "cub3d.h"
+#include <mlx.h>
 
 void	ft_init_free(t_game *game)
 {
@@ -75,6 +76,10 @@ void	init_images_colours(t_game *game)
 	game->locations.south , &game->images.south.width, &game->images.south.height);
 	if (game->images.south.xpm_ptr == NULL)
 		ft_error_msg("Couldn't find the south texture.", game);
+	game->images.west_data.addr = mlx_get_data_addr(game->images.west.xpm_ptr, &game->images.west_data.bits_per_pixel, &game->images.west_data.line_length, &game->images.west_data.endian);
+	game->images.east_data.addr = mlx_get_data_addr(game->images.east.xpm_ptr, &game->images.east_data.bits_per_pixel, &game->images.east_data.line_length, &game->images.east_data.endian);
+	game->images.north_data.addr = mlx_get_data_addr(game->images.north.xpm_ptr, &game->images.north_data.bits_per_pixel, &game->images.north_data.line_length, &game->images.north_data.endian);
+	game->images.south_data.addr = mlx_get_data_addr(game->images.south.xpm_ptr, &game->images.south_data.bits_per_pixel, &game->images.south_data.line_length, &game->images.south_data.endian);
 }
 
 int	main(int argc, char	**argv)
