@@ -6,7 +6,7 @@
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:17:26 by fstark            #+#    #+#             */
-/*   Updated: 2024/01/22 15:49:02 by fstark           ###   ########.fr       */
+/*   Updated: 2024/01/25 18:38:19 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 # define PRESS_D			100
 # define PRESS_A			97
 # define PRESS_ESC			65307
+# define PRESS_LEFT			65361
+# define PRESS_RIGHT		65363
+
 
 typedef struct	s_data2 {
 	void	*img;
@@ -57,13 +60,13 @@ typedef struct s_map
 	char		**full;
 }	t_map;
 
-typedef struct s_free
+/*typedef struct s_free
 {
 	int			malloc_map;
 	int			malloc_display;
 	int			malloc_window;
 	int			malloc_sprites;
-}	t_free;
+}	t_free;*/
 
 typedef struct s_image
 {
@@ -111,8 +114,10 @@ typedef struct s_game
 	t_map		map;
 	t_locations	locations;
 	t_images	images;
-	t_free		free;
 	t_player	pl;
+	t_data2		img;
+	int 		mouse_y;
+	int 		mouse_x;
 }	t_game;
 
 typedef struct s_ray
@@ -127,6 +132,21 @@ typedef struct s_ray
 	int	direction;
 }	t_ray;
 
+typedef struct s_calc_data
+{
+	double sideDistX;
+	double sideDistY;
+	double deltaDistX;
+	double deltaDistY;
+	int	ray_map_x;
+	int	ray_map_y;
+	int stepX;
+    int stepY;
+	int hit;
+    int side;
+	
+}	t_calc_data;
+
 void	ft_check_input(int argc, char **argv, t_game *game);
 int		ft_error_msg(char *message, t_game *game);
 void	ft_read_map(t_game *game, char *argv);
@@ -136,5 +156,12 @@ int		close_game(t_game *game);
 void	raycasting(t_game *game);
 void	ft_check_map(t_game *game);
 int		manage_input(int keysym, t_game *game);
+t_ray	calculate_distance_to_wall(t_game *game, t_ray ray);
+int		my_mlx_pixel_get(t_data2 *data, int x, int y);
+void	my_mlx_pixel_put(t_data2 *data, int x, int y, int color);
+int		update_frame(t_game *game);
+int		manage_mouse(int button, int x, int y, t_game *game);
+void	draw_minimap(t_game *game);
+
 
 #endif

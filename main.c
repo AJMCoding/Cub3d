@@ -1,14 +1,6 @@
 #include "cub3d.h"
 #include <mlx.h>
 
-void	ft_init_free(t_game *game)
-{
-	game->free.malloc_map = 0;
-	game->free.malloc_display = 0;
-	game->free.malloc_window = 0;
-	game->free.malloc_sprites = 0;
-}
-
 void	ft_init_locations(t_game *game)
 {
 	game->locations.west = NULL;
@@ -21,6 +13,10 @@ void	ft_init_locations(t_game *game)
 	game->locations.floor.red = -1;
 	game->locations.floor.green = -1;
 	game->locations.floor.blue = -1;
+	game->images.west.xpm_ptr = NULL;
+	game->images.east.xpm_ptr = NULL;
+	game->images.north.xpm_ptr = NULL;
+	game->images.south.xpm_ptr = NULL;
 }
 
 void	ft_init_mlx(t_game *game)
@@ -30,7 +26,6 @@ void	ft_init_mlx(t_game *game)
 	{
 		ft_error_msg("Couldn't find mlx pointer.", game);
 	}
-	game->free.malloc_display = 1;
 }
 
 void	ft_init_win(t_game *game)
@@ -41,7 +36,6 @@ void	ft_init_win(t_game *game)
 	{
 		ft_error_msg("Couldn't create the Window.", game);
 	}
-	game->free.malloc_window = 1;
 }
 
 int	convert_color(t_colour color)
@@ -53,8 +47,6 @@ int	convert_color(t_colour color)
 	rgb = (rgb << 8) + color.blue;
 	return (rgb);
 }
-
-
 
 void	init_images_colours(t_game *game)
 {
@@ -92,7 +84,7 @@ int	main(int argc, char	**argv)
 		printf("Malloc error.\nCLOSED\n");
 		exit (EXIT_FAILURE);
 	}
-	ft_init_free(game);
+	game->img.img = NULL;
 	ft_init_locations(game);
 	ft_check_input(argc, argv, game);
 	ft_read_map(game, argv[1]);
@@ -101,7 +93,11 @@ int	main(int argc, char	**argv)
 	ft_init_win(game);
 	init_images_colours(game);
 	raycasting(game);
+	mlx_mouse_get_pos(game->mlx_ptr, game->win_ptr, &game->mouse_x, &game->mouse_y);
 	mlx_hook(game->win_ptr, DestroyNotify, ButtonPressMask, close_game, game);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, manage_input, game);
+	//mlx_hook(game->win_ptr, 6, 1L<<6, manage_mouse, game);
+	//mlx_mouse_hook(game->win_ptr, manage_mouse, game);
+	mlx_loop_hook(game->mlx_ptr, update_frame, game);
 	mlx_loop(game->mlx_ptr);
 }

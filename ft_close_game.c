@@ -4,19 +4,36 @@ void	free_allocated_memory(t_game *game)
 {
 	int	str;
 
-	if (game->free.malloc_sprites == 1)
-	{
-		//destroy images
-	}
-	if (game->free.malloc_window == 1)
+	if (game->locations.north != NULL)
+		free(game->locations.north);
+	if (game->locations.south != NULL)
+		free(game->locations.south);
+	if (game->locations.east != NULL)
+		free(game->locations.east);
+	if (game->locations.west != NULL)
+		free(game->locations.west);
+	if (game->images.west.xpm_ptr != NULL)
+		mlx_destroy_image(game->mlx_ptr, game->images.west.xpm_ptr);
+	if (game->images.east.xpm_ptr != NULL)
+		mlx_destroy_image(game->mlx_ptr, game->images.east.xpm_ptr);
+	if (game->images.north.xpm_ptr != NULL)
+		mlx_destroy_image(game->mlx_ptr, game->images.north.xpm_ptr);
+	if (game->images.south.xpm_ptr != NULL)
+		mlx_destroy_image(game->mlx_ptr, game->images.south.xpm_ptr);
+	if (game->win_ptr != NULL)
 		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-	if (game->free.malloc_display == 1)
+	if (game->img.img != NULL)
+	{
+		mlx_destroy_image(game->mlx_ptr, game->img.img);
+		//free(game->img.img);
+	}
+	if (game->mlx_ptr != NULL)
 	{
 		mlx_destroy_display(game->mlx_ptr);
 		free(game->mlx_ptr);
 	}
 	str = 0;
-	if (game->free.malloc_map == 1)
+	if (game->map.full != NULL)
 	{
 		while (game->map.full[str] != NULL)
 			free(game->map.full[str++]);
