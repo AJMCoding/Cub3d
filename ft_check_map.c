@@ -47,12 +47,12 @@ void	check_parameters(t_game *game)
 		{
 			if (game->map.full[i][j] == 'W' || game->map.full[i][j] == 'E' || game->map.full[i][j] == 'N' || game->map.full[i][j] == 'S')
 			{
-				game->pl.pos.x = i;
-				game->pl.pos.y = j;
+				game->pl.pos.x = i + 0.5;
+				game->pl.pos.y = j + 0.5;
 				update_direction(game, game->map.full[i][j]);
 				found++;
 			}
-			if (game->map.full[i][j] != '0' && game->map.full[i][j] != '1' && game->map.full[i][j] != '2' && game->map.full[i][j] != 'W' && game->map.full[i][j] != 'E' && game->map.full[i][j] != 'N' && game->map.full[i][j] != 'S' && game->map.full[i][j] != ' ')
+			if (game->map.full[i][j] != '0' && game->map.full[i][j] != '1' && game->map.full[i][j] != 'W' && game->map.full[i][j] != 'E' && game->map.full[i][j] != 'N' && game->map.full[i][j] != 'S' && game->map.full[i][j] != ' ')
 				ft_error_msg("The map contains invalid characters.", game);
 			j++;
 		}

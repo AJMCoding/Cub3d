@@ -34,6 +34,11 @@ void	change_player_pos(t_game *game, int direction)
 		return ;
 	if (game->map.full[(int)(game->pl.pos.x + direction * game->pl.dir.x * 0.10)][(int)(game->pl.pos.y + direction * game->pl.dir.y * 0.10)] == '1')
 		return ;
+	if ((int)(game->pl.pos.x + direction * game->pl.dir.x * 0.21) != (int)(game->pl.pos.x) && (int)(game->pl.pos.y + direction * game->pl.dir.y * 0.21) != (int)(game->pl.pos.y))
+	{
+		if (game->map.full[(int)(game->pl.pos.x + direction * game->pl.dir.x * 0.21)][(int)(game->pl.pos.y)] == '1' && game->map.full[(int)(game->pl.pos.x)][(int)(game->pl.pos.y + direction * game->pl.dir.y * 0.21)] == '1')
+			return ;
+	}
 	game->pl.pos.x += direction * game->pl.dir.x * 0.2;
 	game->pl.pos.y += direction * game->pl.dir.y * 0.2;
 	//printf("pos_x: %f pos_y: %f\n", game->pl.pos.x, game->pl.pos.y);
@@ -45,6 +50,11 @@ void	change_player_pos_side(t_game *game, int direction)
 		return ;
 	if (game->map.full[(int)(game->pl.pos.x + direction * game->pl.plane.x * 0.10)][(int)(game->pl.pos.y + direction * game->pl.plane.y * 0.10)] == '1')
 		return ;
+	if ((int)(game->pl.pos.x + direction * game->pl.plane.x * 0.21) != (int)(game->pl.pos.x) && (int)(game->pl.pos.y + direction * game->pl.plane.y * 0.21) != (int)(game->pl.pos.y))
+	{
+		if (game->map.full[(int)(game->pl.pos.x + direction * game->pl.plane.x * 0.21)][(int)(game->pl.pos.y)] == '1' && game->map.full[(int)(game->pl.pos.x)][(int)(game->pl.pos.y + direction * game->pl.plane.y * 0.21)] == '1')
+			return ;
+	}
 	game->pl.pos.x += direction * game->pl.plane.x * 0.2;
 	game->pl.pos.y += direction * game->pl.plane.y * 0.2;
 	//printf("pos_x: %f pos_y: %f\n", game->pl.pos.x, game->pl.pos.y);

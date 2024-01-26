@@ -125,5 +125,6 @@ void	ft_read_map(t_game *game, char *argv)
 		ft_error_msg("Error while reading the map.", game);
 	i = find_sprites(game, str);
 	find_map(game, str, i);
+	print_stuff(game);
 	free(str);
 }
