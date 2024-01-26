@@ -114,7 +114,13 @@ void	ft_read_map(t_game *game, char *argv)
 	if (fd == -1)
 		ft_error_msg("The Map couldn't be opened.", game);
 	str = read_map2(fd);
-	close(fd);
+	i = close(fd);
+	if (i == -1)
+	{
+		if (str != NULL)
+			free(str);
+		ft_error_msg("The Map couldn't be closed.", game);
+	}
 	if (str == NULL)
 		ft_error_msg("Error while reading the map.", game);
 	i = find_sprites(game, str);

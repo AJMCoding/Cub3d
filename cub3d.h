@@ -6,7 +6,7 @@
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:17:26 by fstark            #+#    #+#             */
-/*   Updated: 2024/01/25 18:38:19 by fstark           ###   ########.fr       */
+/*   Updated: 2024/01/26 13:54:20 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,20 +106,6 @@ typedef struct s_images
 	int			ceiling;
 }	t_images;
 
-typedef struct s_game
-{
-	void		*mlx_ptr;
-	void		*win_ptr;
-	int			player_sprite;
-	t_map		map;
-	t_locations	locations;
-	t_images	images;
-	t_player	pl;
-	t_data2		img;
-	int 		mouse_y;
-	int 		mouse_x;
-}	t_game;
-
 typedef struct s_ray
 {
 	double dir_x;
@@ -146,6 +132,23 @@ typedef struct s_calc_data
     int side;
 	
 }	t_calc_data;
+
+typedef struct s_game
+{
+	void		*mlx_ptr;
+	void		*win_ptr;
+	int			player_sprite;
+	t_map		map;
+	t_locations	locations;
+	t_images	images;
+	t_player	pl;
+	t_data2		img;
+	int 		mouse_y;
+	int 		mouse_x;
+	t_calc_data		first_ray;
+	t_calc_data		last_ray;
+
+}	t_game;
 
 void	ft_check_input(int argc, char **argv, t_game *game);
 int		ft_error_msg(char *message, t_game *game);

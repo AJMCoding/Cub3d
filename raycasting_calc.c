@@ -61,11 +61,15 @@ t_calc_data	calculate_ray(t_game *game, t_ray ray, t_calc_data data)
 			ray.map_y += data.stepY;
 			data.side = 1;
 		}
-		if (game->map.full[ray.map_x][ray.map_y] != '0')
+		if (game->map.full[ray.map_x][ray.map_y] != '0' && game->map.full[ray.map_x][ray.map_y] != 'W' && game->map.full[ray.map_x][ray.map_y] != 'E' && game->map.full[ray.map_x][ray.map_y] != 'N' && game->map.full[ray.map_x][ray.map_y] != 'S')
 			data.hit = 1;
 	}
 	data.ray_map_x = ray.map_x;
 	data.ray_map_y = ray.map_y;
+	if (ray.num == 0)
+		game->first_ray = data;
+	if (ray.num == WIN_WIDTH - 1)
+		game->last_ray = data;
 	return (data);
 }
 
