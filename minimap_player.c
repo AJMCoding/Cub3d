@@ -45,7 +45,7 @@ void	put_line_of_sight2(t_game *game, double x, double y)
 	double	dir_x;
 	double	dir_y;	
 
-	camera = 2 * 959 / (double)WIN_WIDTH - 1;
+	camera = (2 * WIN_WIDTH - 1) / (double)WIN_WIDTH - 1;
 	dir_x = game->pl.dir.x + game->pl.plane.x * camera;
 	dir_y = game->pl.dir.y + game->pl.plane.y * camera;
 	while (x > 0 && y > 0 && x < 200 && y < 200)

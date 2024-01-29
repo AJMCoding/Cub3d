@@ -6,7 +6,7 @@
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:17:26 by fstark            #+#    #+#             */
-/*   Updated: 2024/01/26 17:57:57 by fstark           ###   ########.fr       */
+/*   Updated: 2024/01/29 12:58:14 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 # include <X11/keysym.h>
 # include <math.h>
 
-
 # define WIN_HEIGHT			540
 # define WIN_WIDTH			960
 
 # define PRESS_W			119
+# define PRESS_Q			113
 # define PRESS_S			115
 # define PRESS_D			100
 # define PRESS_A			97
@@ -35,8 +35,8 @@
 # define PRESS_LEFT			65361
 # define PRESS_RIGHT		65363
 
-
-typedef struct	s_data2 {
+typedef struct s_data2
+{
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -108,29 +108,28 @@ typedef struct s_images
 
 typedef struct s_ray
 {
-	double dir_x;
-	double dir_y;
-	int map_x;
-	int map_y;
-	int num;
-	double distance;
-	double pixel;
-	int	direction;
+	double	dir_x;
+	double	dir_y;
+	int		map_x;
+	int		map_y;
+	int		num;
+	double	distance;
+	double	pixel;
+	int		direction;
 }	t_ray;
 
 typedef struct s_calc_data
 {
-	double sideDistX;
-	double sideDistY;
-	double deltaDistX;
-	double deltaDistY;
-	int	ray_map_x;
-	int	ray_map_y;
-	int stepX;
-    int stepY;
-	int hit;
-    int side;
-	
+	double	sidedistx;
+	double	sidedisty;
+	double	deltadistx;
+	double	deltadisty;
+	int		ray_map_x;
+	int		ray_map_y;
+	int		stepx;
+	int		stepy;
+	int		hit;
+	int		side;
 }	t_calc_data;
 
 typedef struct s_game
@@ -143,10 +142,11 @@ typedef struct s_game
 	t_images	images;
 	t_player	pl;
 	t_data2		img;
-	int 		mouse_y;
-	int 		mouse_x;
-	t_calc_data		first_ray;
-	t_calc_data		last_ray;
+	int			mouse_y;
+	int			mouse_x;
+	t_calc_data	first_ray;
+	t_calc_data	last_ray;
+	int			free_mouse;
 
 }	t_game;
 
@@ -174,5 +174,7 @@ int		ft_atoi_image(char *nptr, int i);
 int		add_colour(t_game *game, char *str, int i);
 int		compare_to_identifier(char *str, int i);
 void	draw_character_line_of_sight(t_game *game);
+int		char_part_of_map(char c);
+void	check_surrounded(t_game *game);
 
 #endif

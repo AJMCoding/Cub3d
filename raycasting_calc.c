@@ -23,23 +23,23 @@ t_calc_data	calculate_ray2(t_game *game, t_ray ray, t_calc_data data)
 {
 	if (ray.dir_x < 0)
 	{
-		data.stepX = -1;
-		data.sideDistX = (game->pl.pos.x - ray.map_x) * data.deltaDistX;
+		data.stepx = -1;
+		data.sidedistx = (game->pl.pos.x - ray.map_x) * data.deltadistx;
 	}
 	else
 	{
-		data.stepX = 1;
-		data.sideDistX = (ray.map_x + 1.0 - game->pl.pos.x) * data.deltaDistX;
+		data.stepx = 1;
+		data.sidedistx = (ray.map_x + 1.0 - game->pl.pos.x) * data.deltadistx;
 	}
 	if (ray.dir_y < 0)
 	{
-		data.stepY = -1;
-		data.sideDistY = (game->pl.pos.y - ray.map_y) * data.deltaDistY;
+		data.stepy = -1;
+		data.sidedisty = (game->pl.pos.y - ray.map_y) * data.deltadisty;
 	}
 	else
 	{
-		data.stepY = 1;
-		data.sideDistY = (ray.map_y + 1.0 - game->pl.pos.y) * data.deltaDistY;
+		data.stepy = 1;
+		data.sidedisty = (ray.map_y + 1.0 - game->pl.pos.y) * data.deltadisty;
 	}
 	return (data);
 }
@@ -49,19 +49,19 @@ t_calc_data	calculate_ray(t_game *game, t_ray ray, t_calc_data data)
 	data = calculate_ray2(game, ray, data);
 	while (data.hit == 0)
 	{
-		if (data.sideDistX < data.sideDistY)
+		if (data.sidedistx < data.sidedisty)
 		{
-			data.sideDistX += data.deltaDistX;
-			ray.map_x += data.stepX;
+			data.sidedistx += data.deltadistx;
+			ray.map_x += data.stepx;
 			data.side = 0;
 		}
 		else
 		{
-			data.sideDistY += data.deltaDistY;
-			ray.map_y += data.stepY;
+			data.sidedisty += data.deltadisty;
+			ray.map_y += data.stepy;
 			data.side = 1;
 		}
-		if (game->map.full[ray.map_x][ray.map_y] != '0' && game->map.full[ray.map_x][ray.map_y] != 'W' && game->map.full[ray.map_x][ray.map_y] != 'E' && game->map.full[ray.map_x][ray.map_y] != 'N' && game->map.full[ray.map_x][ray.map_y] != 'S')
+		if (game->map.full[ray.map_x][ray.map_y] == '1')
 			data.hit = 1;
 	}
 	data.ray_map_x = ray.map_x;
@@ -79,20 +79,20 @@ t_ray	calculate_distance_to_wall(t_game *game, t_ray ray)
 
 	data.hit = 0;
 	if (ray.dir_x == 0.0)
-		data.deltaDistX = 1e30;
+		data.deltadistx = 1e30;
 	else
-		data.deltaDistX = fabs(1.0 / ray.dir_x);
+		data.deltadistx = fabs(1.0 / ray.dir_x);
 	if (ray.dir_y == 0.0)
-		data.deltaDistY = 1e30;
+		data.deltadisty = 1e30;
 	else
-		data.deltaDistY = fabs(1.0 / ray.dir_y);
+		data.deltadisty = fabs(1.0 / ray.dir_y);
 	data = calculate_ray(game, ray, data);
 	ray.map_x = data.ray_map_x;
 	ray.map_y = data.ray_map_y;
 	if (data.side == 0)
-		ray.distance = (data.sideDistX - data.deltaDistX);
+		ray.distance = (data.sidedistx - data.deltadistx);
 	else
-		ray.distance = (data.sideDistY - data.deltaDistY);
+		ray.distance = (data.sidedisty - data.deltadisty);
 	if (data.side == 0)
 		ray.pixel = game->pl.pos.y + ray.distance * ray.dir_y;
 	else
@@ -192,11 +192,15 @@ t_ray	calculate_distance_to_wall(t_game *game, t_ray ray)
 			ray.direction = 4;//west
 	}
 	//ray.direction = side;
-	//printf("ray.direction: %d\n dir: x: %f y: %f\n", ray.direction, ray.dir_x, ray.dir_y);
+	//printf("ray.direction: %d\n dir: x: %f y: %f\n",
+	 ray.direction, ray.dir_x, ray.dir_y);
 	//printf("wallX: %f\n", wallX);
 
-	//printf("found map wall at: %d, %d value: %c distance: %f \n", ray.map_x, ray.map_y, game->map.full[ray.map_x][ray.map_y], perpWallDist);
+	//printf("found map wall at: %d, %d value: %c distance: %f \n",
+	 ray.map_x, ray.map_y, game->map.full[ray.map_x][ray.map_y], perpWallDist);
 	//if (ray.num == 959)
-		//printf("found map wall at: %d, %d value: %c distance: %f \n", ray.map_x, ray.map_y, game->map.full[ray.map_x][ray.map_y], perpWallDist);
+		//printf("found map wall at: %d, %d value: %c distance: %f \n",
+		ray.map_x, ray.map_y, 
+		game->map.full[ray.map_x][ray.map_y], perpWallDist);
 	return (ray);
 }*/

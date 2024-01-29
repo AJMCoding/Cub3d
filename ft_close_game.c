@@ -1,11 +1,7 @@
-# include "cub3d.h"
-#include "libft/libft.h"
-#include <stdlib.h>
+#include "cub3d.h"
 
-void	free_allocated_memory(t_game *game)
+void	free_allocated_memory2(t_game *game)
 {
-	int	str;
-
 	if (game->locations.north != NULL)
 		free(game->locations.north);
 	if (game->locations.south != NULL)
@@ -22,12 +18,18 @@ void	free_allocated_memory(t_game *game)
 		mlx_destroy_image(game->mlx_ptr, game->images.north.xpm_ptr);
 	if (game->images.south.xpm_ptr != NULL)
 		mlx_destroy_image(game->mlx_ptr, game->images.south.xpm_ptr);
+}
+
+void	free_allocated_memory(t_game *game)
+{
+	int	str;
+
+	free_allocated_memory2(game);
 	if (game->win_ptr != NULL)
 		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	if (game->img.img != NULL)
 	{
 		mlx_destroy_image(game->mlx_ptr, game->img.img);
-		//free(game->img.img);
 	}
 	if (game->mlx_ptr != NULL)
 	{

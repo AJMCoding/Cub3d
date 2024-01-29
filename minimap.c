@@ -32,18 +32,18 @@ int	find_color(t_game *game, int i, int j)
 {
 	int	color;
 
-	i += game->pl.pos.x - 5;
-	j += game->pl.pos.y - 5;
-	if (check_for_beyond_map(game, i) == 1)
-		return (0x0000FF00);	
-	if (check_for_off_map(game, i, j) == 1)
-		return (0x0000FF00);
+	i += (int)game->pl.pos.x - 5;
+	j += (int)game->pl.pos.y - 5;
 	if (i < 0 || j < 0)
+		return (0x0000FF00);
+	if (check_for_beyond_map(game, i) == 1)
+		return (0x0000FF00);
+	if (check_for_off_map(game, i, j) == 1)
 		return (0x0000FF00);
 	if (game->map.full[i][j] == '1')
 		color = 0x00FF0000;
-	else if (game->map.full[i][j] == '0' || game->map.full[i][j] == 'N' 
-		|| game->map.full[i][j] == 'S' || game->map.full[i][j] == 'E' 
+	else if (game->map.full[i][j] == '0' || game->map.full[i][j] == 'N'
+		|| game->map.full[i][j] == 'S' || game->map.full[i][j] == 'E'
 		|| game->map.full[i][j] == 'W')
 		color = 0x00000000;
 	else
@@ -57,15 +57,14 @@ void	put_color(t_game *game, int i, int j, int color)
 	int	y;
 
 	x = 0;
-	y = 0;
 	while (x < 20)
 	{
+		y = 0;
 		while (y < 20)
 		{
 			my_mlx_pixel_put(&game->img, j * 20 + x, i * 20 + y, color);
 			y++;
 		}
-		y = 0;
 		x++;
 	}
 }

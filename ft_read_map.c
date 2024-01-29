@@ -34,10 +34,12 @@ char	*ft_strjoin_free_str(char *left_str, char *buff)
 
 void	find_map(t_game *game, char *str, int i)
 {
-	char *str2;
+	char	*str2;
+
 	while (str[i] != '\0')
 	{
-		if (str[i] == '1' || str[i] == '0' || str[i] == 'N' || str[i] == 'S' || str[i] == 'W' || str[i] == 'E')
+		if (str[i] == '1' || str[i] == '0' || str[i] == 'N'
+			|| str[i] == 'S' || str[i] == 'W' || str[i] == 'E')
 			break ;
 		i++;
 	}
@@ -86,12 +88,15 @@ char	*read_map2(int fd)
 	return (str);
 }
 
+/*
 void	print_stuff(t_game *game)
 {
 	int p;
 
-	printf("floor: %d %d %d\n", game->locations.floor.red, game->locations.floor.green, game->locations.floor.blue);
-	printf("ceiling: %d %d %d\n", game->locations.ceiling.red, game->locations.ceiling.green, game->locations.ceiling.blue);
+	printf("floor: %d %d %d\n", game->locations.floor.red,
+	game->locations.floor.green, game->locations.floor.blue);
+	printf("ceiling: %d %d %d\n", game->locations.ceiling.red,
+	game->locations.ceiling.green, game->locations.ceiling.blue);
 	printf("north: %s\n", game->locations.north);
 	printf("south: %s\n", game->locations.south);
 	printf("west: %s\n", game->locations.west);
@@ -102,7 +107,7 @@ void	print_stuff(t_game *game)
 		printf("%s\n", game->map.full[p]);
 		p++;
 	}
-}
+}*/
 
 void	ft_read_map(t_game *game, char *argv)
 {
@@ -125,6 +130,5 @@ void	ft_read_map(t_game *game, char *argv)
 		ft_error_msg("Error while reading the map.", game);
 	i = find_sprites(game, str);
 	find_map(game, str, i);
-	print_stuff(game);
 	free(str);
 }
