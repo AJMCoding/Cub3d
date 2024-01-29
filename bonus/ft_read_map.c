@@ -1,5 +1,4 @@
 #include "cub3d.h"
-#include "libft/libft.h"
 
 //NO SO WE EA F C
 
