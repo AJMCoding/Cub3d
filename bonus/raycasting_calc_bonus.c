@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 //1 = north 2 = east 3 = south 4 = west
 int	set_ray_direction(t_ray ray, t_calc_data data)
@@ -61,11 +61,16 @@ t_calc_data	calculate_ray(t_game *game, t_ray ray, t_calc_data data)
 			ray.map_y += data.stepy;
 			data.side = 1;
 		}
+		if (game->map.full[ray.map_x][ray.map_y] == 'D')
+			data = calc_door(game, ray, data);
 		if (game->map.full[ray.map_x][ray.map_y] == '1')
 			data.hit = 1;
 	}
-	data.ray_map_x = ray.map_x;
-	data.ray_map_y = ray.map_y;
+	if (data.door_found == 0)
+	{
+		data.ray_map_x = ray.map_x;
+		data.ray_map_y = ray.map_y;
+	}
 	if (ray.num == 0)
 		game->first_ray = data;
 	if (ray.num == WIN_WIDTH - 1)
@@ -78,6 +83,7 @@ t_ray	calculate_distance_to_wall(t_game *game, t_ray ray)
 	t_calc_data	data;
 
 	data.hit = 0;
+	data.door_found = 0;
 	if (ray.dir_x == 0.0)
 		data.deltadistx = 1e30;
 	else

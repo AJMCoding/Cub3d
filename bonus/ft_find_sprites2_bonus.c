@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	compare_to_identifier(char *str, int i)
 {

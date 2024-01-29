@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	ft_check_input(int argc, char **argv, t_game *game)
 {

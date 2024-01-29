@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 t_ray	calculate_ray_angle(t_game *game, int rays)
 {

@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	update_direction2(t_game *game, char direction)
 {
