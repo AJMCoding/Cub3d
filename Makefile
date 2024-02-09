@@ -13,7 +13,7 @@ VALGRIND			=	valgrind --leak-check=full
 SRCS            =	main.c ft_check_input.c ft_close_game.c ft_read_map.c \
 					ft_find_sprites.c raycasting.c ft_manage_input.c ft_check_map.c \
 					raycasting_utils.c raycasting_calc.c init.c utils.c \
-					ft_find_sprites2.c ft_check_map_surrounded.c\
+					ft_find_sprites2.c ft_check_map_surrounded.c ft_check_validpath.c\
 
 SRCS_BONUS      =	main.c ft_check_input.c ft_close_game.c ft_read_map.c \
 					ft_find_sprites.c raycasting.c ft_manage_input.c ft_check_map.c \

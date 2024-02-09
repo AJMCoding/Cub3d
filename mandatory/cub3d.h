@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akortvel <akortvel@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:17:26 by fstark            #+#    #+#             */
-/*   Updated: 2024/01/29 16:18:25 by fstark           ###   ########.fr       */
+/*   Updated: 2024/02/09 13:43:54 by akortvel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,5 +175,8 @@ int		compare_to_identifier(char *str, int i);
 void	draw_character_line_of_sight(t_game *game);
 int		char_part_of_map(char c);
 void	check_surrounded(t_game *game);
+
+//add
+void ft_validpath_check(t_game *list);
 
 #endif

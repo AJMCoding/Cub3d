@@ -15,6 +15,7 @@ int	main(int argc, char	**argv)
 	ft_check_input(argc, argv, game);
 	ft_read_map(game, argv[1]);
 	ft_check_map(game);
+	//ft_validpath_check(game);
 	ft_init_mlx(game);
 	ft_init_win(game);
 	init_images_colours(game);

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Választható térképek listájának megjelenítése
-echo "Választható térképek:"
-map_files=("maps/1.cub" "maps/space.cub")
+echo "Choose a map:"
+map_files=("maps/1.cub" "maps/space.cub" "maps/maze.cub")
 select map_file in "${map_files[@]}"; do
     if [[ -n $map_file ]]; then
         break
