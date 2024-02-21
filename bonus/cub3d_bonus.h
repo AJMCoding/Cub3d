@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:17:26 by fstark            #+#    #+#             */
-/*   Updated: 2024/01/29 16:01:20 by fstark           ###   ########.fr       */
+/*   Updated: 2024/02/21 15:01:02 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include "../libft/libft.h"
 # include <stdlib.h>
@@ -118,6 +118,14 @@ typedef struct s_ray
 	int		direction;
 }	t_ray;
 
+typedef	struct s_simray
+{
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+}	t_simray;
+
 typedef struct s_calc_data
 {
 	double	sidedistx;
@@ -130,6 +138,7 @@ typedef struct s_calc_data
 	int		stepy;
 	int		hit;
 	int		side;
+	int		door_found;
 }	t_calc_data;
 
 typedef struct s_game
@@ -150,31 +159,32 @@ typedef struct s_game
 
 }	t_game;
 
-void	ft_check_input(int argc, char **argv, t_game *game);
-void	ft_error_msg(char *message, t_game *game);
-void	ft_read_map(t_game *game, char *argv);
-char	*ft_strldup(char *s, size_t len);
-int		find_sprites(t_game *game, char *str);
-int		close_game(t_game *game);
-void	raycasting(t_game *game);
-void	ft_check_map(t_game *game);
-int		manage_input(int keysym, t_game *game);
-t_ray	calculate_distance_to_wall(t_game *game, t_ray ray);
-int		my_mlx_pixel_get(t_data2 *data, int x, int y);
-void	my_mlx_pixel_put(t_data2 *data, int x, int y, int color);
-int		update_frame(t_game *game);
-int		manage_mouse(int button, int x, int y, t_game *game);
-void	draw_minimap(t_game *game);
-int		convert_color(t_colour color);
-void	init_images_colours(t_game *game);
-void	ft_init_locations(t_game *game);
-void	ft_init_mlx(t_game *game);
-void	ft_init_win(t_game *game);
-int		ft_atoi_image(char *nptr, int i);
-int		add_colour(t_game *game, char *str, int i);
-int		compare_to_identifier(char *str, int i);
-void	draw_character_line_of_sight(t_game *game);
-int		char_part_of_map(char c);
-void	check_surrounded(t_game *game);
+void		ft_check_input(int argc, char **argv, t_game *game);
+void		ft_error_msg(char *message, t_game *game);
+void		ft_read_map(t_game *game, char *argv);
+char		*ft_strldup(char *s, size_t len);
+int			find_sprites(t_game *game, char *str);
+int			close_game(t_game *game);
+void		raycasting(t_game *game);
+void		ft_check_map(t_game *game);
+int			manage_input(int keysym, t_game *game);
+t_ray		calculate_distance_to_wall(t_game *game, t_ray ray);
+int			my_mlx_pixel_get(t_data2 *data, int x, int y);
+void		my_mlx_pixel_put(t_data2 *data, int x, int y, int color);
+int			update_frame(t_game *game);
+int			manage_mouse(int button, int x, int y, t_game *game);
+void		draw_minimap(t_game *game);
+int			convert_color(t_colour color);
+void		init_images_colours(t_game *game);
+void		ft_init_locations(t_game *game);
+void		ft_init_mlx(t_game *game);
+void		ft_init_win(t_game *game);
+int			ft_atoi_image(char *nptr, int i);
+int			add_colour(t_game *game, char *str, int i);
+int			compare_to_identifier(char *str, int i);
+void		draw_character_line_of_sight(t_game *game);
+int			char_part_of_map(char c);
+void		check_surrounded(t_game *game);
+t_calc_data	calc_door(t_game *game, t_ray ray, t_calc_data data);
 
 #endif

@@ -63,7 +63,6 @@ void	ft_init_locations(t_game *game)
 	game->images.east.xpm_ptr = NULL;
 	game->images.north.xpm_ptr = NULL;
 	game->images.south.xpm_ptr = NULL;
-	game->free_mouse = 0;
 }
 
 void	ft_init_mlx(t_game *game)

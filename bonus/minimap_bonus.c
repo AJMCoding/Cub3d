@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	check_for_off_map(t_game *game, int i, int j)
 {

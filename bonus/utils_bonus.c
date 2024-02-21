@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	convert_color(t_colour color)
 {
@@ -26,7 +26,7 @@ int	ft_atoi_image(char *nptr, int i)
 
 int	char_part_of_map(char c)
 {
-	if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'W'
+	if (c == '0' || c == '1' || c == 'D' || c == 'N' || c == 'S' || c == 'W'
 		|| c == 'E' || c == ' ')
 		return (1);
 	return (0);

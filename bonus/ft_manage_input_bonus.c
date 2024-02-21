@@ -1,5 +1,4 @@
-#include "cub3d.h"
-#include <X11/X.h>
+#include "cub3d_bonus.h"
 
 void	rotate_camera(t_game *g, int direction, double i)
 {

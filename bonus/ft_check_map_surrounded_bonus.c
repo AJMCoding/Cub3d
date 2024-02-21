@@ -1,9 +1,9 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	is_valid(char c)
 {
 	if (c == '0' || c == '1' || c == 'N' || c == 'S'
-		|| c == 'E' || c == 'W')
+		|| c == 'E' || c == 'W' || c == 'D')
 		return (1);
 	return (0);
 }
@@ -50,6 +50,20 @@ int	check_surrounded2(t_game *game, int i, int j)
 	return (1);
 }
 
+int	walls_correct_around_door(t_game *game, int i, int j)
+{
+	int	k;
+
+	k = 0;
+	if (game->map.full[i][j + 1] == '1' && game->map.full[i][j - 1] == '1')
+		k += 1;
+	if (game->map.full[i + 1][j] == '1' && game->map.full[i - 1][j] == '1')
+		k += 1;
+	if (k == 0)
+		return (0);
+	return (1);
+}
+
 void	check_surrounded(t_game *game)
 {
 	int	i;
@@ -63,11 +77,14 @@ void	check_surrounded(t_game *game)
 		{
 			if (game->map.full[i][j] == '0' || game->map.full[i][j] == 'W'
 			|| game->map.full[i][j] == 'E' || game->map.full[i][j] == 'N'
-			|| game->map.full[i][j] == 'S')
+			|| game->map.full[i][j] == 'S' || game->map.full[i][j] == 'D')
 			{
 				if (check_surrounded2(game, i, j) == 0)
 					ft_error_msg("The map is not surrounded by walls.", game);
 			}
+			if (game->map.full[i][j] == 'D')
+				if (walls_correct_around_door(game, i, j) == 0)
+					ft_error_msg("A Door is placed in a forbidden way.", game);
 			j++;
 		}
 		i++;

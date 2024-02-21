@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	put_player_circle(t_game *game, double x, double y)
 {
