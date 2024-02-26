@@ -346,19 +346,21 @@ int door_is_open(t_position intersection, t_game *game)
 	return (1);
 }
 
-t_position findIntersectionX(t_simray simray, double y) 
+t_position findIntersectionX(t_simray simray, double y, t_calc_data data) 
 {
 	t_position	intersection;
+	(void)data;
 
-	if (simray.dir_y != 0) 
+	if (simray.false_dir_y != 0) 
 	{
 		intersection.y = y;
-		if (simray.dir_y < 0)
-			intersection.x = simray.pos_x + 0.5 / simray.dir_y;
+		/* if (data.stepy < 0)
+			intersection.x = simray.pos_x + (0.5 * fabs(simray.dir_y));
 		else
-		 	intersection.x = simray.pos_x - 0.5 / simray.dir_y;;
+		 	intersection.x = simray.pos_x - (0.5 * fabs(simray.dir_y)); */
+		intersection.x = simray.pos_x - (0.5 * simray.dir_y);
 	}
-	else
+	else 
 	{
 		intersection.x = NAN;
 		intersection.y = NAN;  // Non-intersecting or coincident with x-axis
@@ -366,17 +368,19 @@ t_position findIntersectionX(t_simray simray, double y)
 	return (intersection);
 }
 
-t_position findIntersectionY(t_simray simray, double x) 
+t_position findIntersectionY(t_simray simray, double x, t_calc_data data) 
 {
 	t_position	intersection;
+	(void)data;
 
-    if (simray.dir_x != 0)
+    if (simray.false_dir_x != 0)
 	{
         intersection.x = x;
-		if (simray.dir_x < 0)
-       		intersection.y = simray.pos_y + 0.5 / simray.dir_x;
+/* 		if (data.stepx < 0)
+       		intersection.y = simray.pos_y + (0.5 * fabs(simray.dir_x));
 		else
-			intersection.y = simray.pos_y - 0.5 / simray.dir_x;;
+			intersection.y = simray.pos_y - (0.5 * fabs(simray.dir_x)); */
+		intersection.y = simray.pos_y - (0.5 * simray.dir_x);
     }
 	else
 	{
@@ -386,17 +390,17 @@ t_position findIntersectionY(t_simray simray, double x)
 	return (intersection);
 }
 
-t_position	find_intersection(t_simray simray, double x, double y, int side)
+t_position	find_intersection(t_simray simray, double x, double y, t_calc_data data)
 {
 	t_position	intersection;
 	//find intersection with door
-	if (side == 0)
+	if (data.side == 1)
 	{
-		intersection = findIntersectionY(simray, x);	
+		intersection = findIntersectionX(simray, y, data);
 	}
 	else
 	{
-		intersection = findIntersectionX(simray, y);
+		intersection = findIntersectionY(simray, x, data);
 	}
 	return (intersection);
 }
@@ -405,8 +409,10 @@ t_simray	calc_sim_ray(t_ray ray, t_position current_pos)
 {
 	t_simray	simray;
 
-	simray.dir_x = ray.dir_x;
-	simray.dir_y = ray.dir_y;
+	simray.dir_x = ray.true_dir_x;
+	simray.dir_y = ray.true_dir_y;
+	simray.false_dir_x = ray.dir_x;
+	simray.false_dir_y = ray.dir_y;
 	simray.pos_x = current_pos.x;
 	simray.pos_y = current_pos.y;
 	return (simray);
@@ -421,33 +427,50 @@ int	ray_hits_door(t_simray	simray, t_calc_data data, t_game *game, int i)
 	if (data.side == 0) //x
 	{
 		//printf("side == 0\n");
-		if (simray.dir_x < 0)
-			intersection = find_intersection(simray, simray.pos_x + 0.5, simray.pos_y, 0);
+		if (data.stepx < 0)
+		{
+			intersection = find_intersection(simray, simray.pos_x + 0.5, simray.pos_y, data);
+			//printf("1: side == 0, step_y < 0\n");
+		}
 		else
-		 	intersection = find_intersection(simray, simray.pos_x - 0.5, simray.pos_y, 0);
+		{
+		 	intersection = find_intersection(simray, simray.pos_x - 0.5, simray.pos_y, data);
+			//printf("2: side == 0, step_y > 0\n");
+		}
 	}
 	else //y
 	{
 		//printf("side == 1\n");
-		if (simray.dir_y < 0)
-			intersection = find_intersection(simray, simray.pos_x, simray.pos_y + 0.5, 1);
+		if (data.stepy < 0)
+		{
+			intersection = find_intersection(simray, simray.pos_x, simray.pos_y + 0.5, data);
+			//printf("3: side == 1, step_x < 0\n");
+		}
 		else
-			intersection = find_intersection(simray, simray.pos_x, simray.pos_y - 0.5, 1);
+		{
+			intersection = find_intersection(simray, simray.pos_x, simray.pos_y - 0.5, data);
+			//printf("4: side == 1, step_x < 0\n");
+		}
 	}
 	if (i == 0)
-		printf("inter x:%f inter y:%f\n", intersection.x, intersection.y);
-	if (data.side == 0)
 	{
-		if (simray.dir_y < 0)
+		printf("inter x:%f inter y:%f\n", intersection.x, intersection.y);
+		printf("dir x:%f dir y:%f\n", simray.dir_x, simray.dir_y);
+	}
+/* 	if (data.side == 0)
+	{
+		if (data.stepy < 0)
 		{
-			if (intersection.x > simray.pos_x && intersection.x < simray.pos_x + 1)
+			if (i == 0)
+				printf(" inter.x:%f simray.x:%f\n", intersection.x, simray.pos_x + 1);
+			if (intersection.x > (int)simray.pos_x && intersection.x < (int)simray.pos_x + 1)
 				return (1);
 			else
 			 	return (0);
 		}
 		else 
 		{
-			if (intersection.x > simray.pos_x && intersection.x < simray.pos_x - 1)
+			if (intersection.x > (int)simray.pos_x && intersection.x < (int)simray.pos_x - 1)
 				return (1);
 			else
 			 	return (0);	
@@ -456,7 +479,7 @@ int	ray_hits_door(t_simray	simray, t_calc_data data, t_game *game, int i)
 	}
 	else 
 	{
-		if (simray.dir_x < 0)
+		if (data.stepy < 0)
 		{
 			if (intersection.y > simray.pos_y && intersection.y < simray.pos_y + 1)
 				return (1);
@@ -471,7 +494,28 @@ int	ray_hits_door(t_simray	simray, t_calc_data data, t_game *game, int i)
 			 	return (0);	
 
 		}
+	}*/
+	if ((data.side == 0 && data.stepx < 0))
+	{
+		if (intersection.x > (int)simray.pos_x && intersection.x < (int)simray.pos_x + 1)
+			return (1);
 	}
+	if (data.side == 1 && data.stepx > 0)
+	{
+		if (intersection.x > (int)simray.pos_x - 1 && intersection.x < (int)simray.pos_x)
+			return (1);
+	}
+	if (data.side == 0 && data.stepy < 0)
+	{
+		if (intersection.y > (int)simray.pos_y && intersection.y < (int)simray.pos_y + 1)
+			return (1);
+	}
+	if (data.side == 1 && data.stepy > 0)
+	{
+		if (intersection.y > (int)simray.pos_y - 1 && intersection.y < (int)simray.pos_y)
+			return (1);
+	}
+	return (0);
 }
 
 t_calc_data	calc_door(t_game *game, t_ray ray, t_calc_data data)
@@ -481,15 +525,15 @@ t_calc_data	calc_door(t_game *game, t_ray ray, t_calc_data data)
 
 	current_pos = calc_current_pos(game, ray, data);
 	simray = calc_sim_ray(ray, current_pos);
-	if (ray.num == 0)
+/* 	if (ray.num == 0)
 	{
 		printf("current x:%f\n", current_pos.x);
 		printf("current y:%f\n", current_pos.y);
-	}
+	} */
 	if (ray_hits_door(simray, data, game, ray.num) == 1)
 	{
-		data.hit = 1;
-		data.door_found = 1;
+		//data.hit = 1;
+		//data.door_found = 1;
 		return (data);
 	}
 	else

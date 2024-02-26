@@ -1,13 +1,25 @@
 #include "cub3d_bonus.h"
+#include <stdio.h>
 
 t_ray	calculate_ray_angle(t_game *game, int rays)
 {
 	t_ray	ray;
 	double	camera;
+	//double	x;
 
 	camera = 2 * rays / (double)WIN_WIDTH - 1;
 	ray.dir_x = game->pl.dir.x + game->pl.plane.x * camera;
 	ray.dir_y = game->pl.dir.y + game->pl.plane.y * camera;
+	ray.true_dir_x = ray.dir_x / ray.dir_y;
+	ray.true_dir_y = ray.dir_y / ray.dir_x;
+/* 	if (rays == 0)
+		printf("x:%f y:%f \n", game->pl.dir.x, game->pl.dir.y); */
+	ray.true_dir_y = ray.dir_x / ray.dir_y;
+	ray.true_dir_x = ray.dir_y / ray.dir_x;
+/* 	if (rays == 0)
+		printf("x:%f y:%f \n", ray.true_dir_x, ray.true_dir_y); */
+	//ray.true_dir_x = 1 + (ray.dir_y * ray.dir_y) / (ray.dir_x * ray.dir_x);
+	//ray.true_dir_y = 1 + (ray.dir_x * ray.dir_x) / (ray.dir_y * ray.dir_y);
 	ray.map_x = (int)game->pl.pos.x;
 	ray.map_y = (int)game->pl.pos.y;
 	ray.num = rays;

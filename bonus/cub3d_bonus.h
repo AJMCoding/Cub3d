@@ -6,7 +6,7 @@
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:17:26 by fstark            #+#    #+#             */
-/*   Updated: 2024/02/21 15:01:02 by fstark           ###   ########.fr       */
+/*   Updated: 2024/02/26 13:06:22 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ typedef struct s_ray
 {
 	double	dir_x;
 	double	dir_y;
+	double	true_dir_x;
+	double	true_dir_y;
 	int		map_x;
 	int		map_y;
 	int		num;
@@ -124,6 +126,8 @@ typedef	struct s_simray
 	double	pos_y;
 	double	dir_x;
 	double	dir_y;
+	double	false_dir_x;
+	double	false_dir_y;
 }	t_simray;
 
 typedef struct s_calc_data
