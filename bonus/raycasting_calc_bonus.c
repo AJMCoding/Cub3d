@@ -63,6 +63,8 @@ t_calc_data	calculate_ray(t_game *game, t_ray ray, t_calc_data data)
 		}
 		if (game->map.full[ray.map_x][ray.map_y] == 'D')
 			data = calc_door(game, ray, data);
+		if (game->map.full[ray.map_x][ray.map_y] == 'P')
+			save_sprite(game, ray.map_x, ray.map_y);
 		if (game->map.full[ray.map_x][ray.map_y] == '1')
 			data.hit = 1;
 	}
@@ -84,6 +86,7 @@ t_ray	calculate_distance_to_wall(t_game *game, t_ray ray)
 
 	data.hit = 0;
 	data.door_found = 0;
+	ray.door_found = 0;
 	if (ray.dir_x == 0.0)
 		data.deltadistx = 1e30;
 	else
@@ -104,7 +107,15 @@ t_ray	calculate_distance_to_wall(t_game *game, t_ray ray)
 	else
 		ray.pixel = game->pl.pos.x + ray.distance * ray.dir_x;
 	ray.pixel -= floor((ray.pixel));
+	if (data.door_found == 1)
+	{
+		ray.pixel = game->door_offset - ray.pixel;
+	}
 	ray.direction = set_ray_direction(ray, data);
+	if (data.door_found == 1)
+	{
+		ray.door_found = 1;
+	}
 	return (ray);
 }
 

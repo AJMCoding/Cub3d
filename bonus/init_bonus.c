@@ -47,7 +47,7 @@ void	init_images_colours(t_game *game)
 	init_images_colours2(game);
 }
 
-void	ft_init_locations(t_game *game)
+void	ft_init(t_game *game)
 {
 	game->locations.west = NULL;
 	game->locations.east = NULL;
@@ -64,6 +64,13 @@ void	ft_init_locations(t_game *game)
 	game->images.north.xpm_ptr = NULL;
 	game->images.south.xpm_ptr = NULL;
 	game->free_mouse = 0;
+	game->input.front = 0;
+	game->input.back = 0;
+	game->input.left = 0;
+	game->input.right = 0;
+	game->input.turn_left = 0;
+	game->input.turn_right = 0;
+	game->sprites = NULL;
 }
 
 void	ft_init_mlx(t_game *game)

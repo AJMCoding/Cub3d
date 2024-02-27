@@ -32,16 +32,20 @@ void	put_part_of_texture(t_ray ray, int start, int x_at_wall, t_game *game)
 	int	color;
 
 	height = (int)((WIN_HEIGHT / ray.distance) * 0.8);
-	if (ray.direction == 1)
+	color = 0;
+	if (ray.door_found == 1)
 		color = my_mlx_pixel_get(&game->images.north_data,
 				(x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
-	if (ray.direction == 2)
+	else if (ray.direction == 1)
+		color = my_mlx_pixel_get(&game->images.north_data,
+				(x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
+	else if (ray.direction == 2)
 		color = my_mlx_pixel_get(&game->images.east_data,
 				(x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
-	if (ray.direction == 3)
+	else if (ray.direction == 3)
 		color = my_mlx_pixel_get(&game->images.south_data,
 				(x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
-	if (ray.direction == 4)
+	else if (ray.direction == 4)
 		color = my_mlx_pixel_get(&game->images.west_data,
 				(x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
 	my_mlx_pixel_put(&game->img, ray.num, start, color);
@@ -95,6 +99,22 @@ void	draw_floor_ceiling(t_game *game, t_data2 img)
 	}
 }
 
+void    free_game_sprites(t_game *game)
+{
+	t_sprite *tmp;
+	t_sprite *tmp2;
+
+	if (game->sprites == NULL)
+		return ;
+	tmp = game->sprites;
+	while (tmp != NULL)
+	{
+		tmp2 = tmp->next;
+		free(tmp);
+		tmp = tmp2;
+	}
+}
+
 void	raycasting(t_game *game)
 {
 	int		rays;
@@ -107,12 +127,17 @@ void	raycasting(t_game *game)
 	game->img.img = mlx_new_image(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	game->img.addr = mlx_get_data_addr(game->img.img, &game->img.bits_per_pixel,
 			&game->img.line_length, &game->img.endian);
+	free_game_sprites(game);
+	game->sprites = NULL;
 	draw_floor_ceiling(game, game->img);
 	while (rays < WIN_WIDTH)
 	{
 		ray = calculate_ray_angle(game, rays);
 		ray = calculate_distance_to_wall(game, ray);
 		draw_wall(ray, game);
+		if (ray.num == 0)	
+			printf("ray %f\n", ray.distance);
+		draw_sprites(game);
 		rays ++;
 	}
 	draw_minimap(game);

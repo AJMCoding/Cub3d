@@ -27,7 +27,7 @@ int	ft_atoi_image(char *nptr, int i)
 int	char_part_of_map(char c)
 {
 	if (c == '0' || c == '1' || c == 'D' || c == 'N' || c == 'S' || c == 'W'
-		|| c == 'E' || c == ' ')
+		|| c == 'E' || c == ' ' || c == 'P')
 		return (1);
 	return (0);
 }
@@ -52,4 +52,14 @@ char	*ft_strldup(char *s, size_t len)
 	}
 	sub_str[i] = '\0';
 	return (sub_str);
+}
+
+long long	millitimestamp(void)
+{
+	struct timeval	timeval;
+	long long		microtime;
+
+	gettimeofday(&timeval, NULL);
+	microtime = timeval.tv_sec * 1000LL + timeval.tv_usec / 1000;
+	return (microtime);
 }

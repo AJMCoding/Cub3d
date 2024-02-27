@@ -3,7 +3,7 @@
 int	is_valid(char c)
 {
 	if (c == '0' || c == '1' || c == 'N' || c == 'S'
-		|| c == 'E' || c == 'W' || c == 'D')
+		|| c == 'E' || c == 'W' || c == 'D' || c == 'P')
 		return (1);
 	return (0);
 }

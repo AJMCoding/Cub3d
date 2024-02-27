@@ -39,6 +39,31 @@ void	update_direction(t_game *game, char direction, int i, int j)
 	update_direction2(game, direction);
 }
 
+void	save_door(t_game *game, int i, int j)
+{
+	t_door	*door;
+	t_door	*tmp;
+
+	door = malloc(sizeof(t_door));
+	if (door == NULL)
+		ft_error_msg("Malloc error.", game);
+	door->x = i;
+	door->y = j;
+	door->open = 1;
+	door->next = NULL;
+	if (game->doors == NULL)
+	{
+		game->doors = door;
+	}
+	else
+	{
+		tmp = game->doors;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = door;
+	}
+}
+
 void	check_parameters(t_game *game, int i, int j)
 {
 	int	found;
@@ -56,6 +81,8 @@ void	check_parameters(t_game *game, int i, int j)
 				update_direction(game, game->map.full[i][j], i, j);
 				found++;
 			}
+			if (game->map.full[i][j] == 'D')
+				save_door(game, i, j);
 			if (char_part_of_map(game->map.full[i][j]) == 0)
 				ft_error_msg("The map contains invalid characters.", game);
 			j++;

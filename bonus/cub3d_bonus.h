@@ -6,7 +6,7 @@
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:17:26 by fstark            #+#    #+#             */
-/*   Updated: 2024/02/26 13:06:22 by fstark           ###   ########.fr       */
+/*   Updated: 2024/02/27 18:26:55 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <math.h>
+#include <sys/time.h>
 
 # define WIN_HEIGHT			540
 # define WIN_WIDTH			960
@@ -118,6 +119,7 @@ typedef struct s_ray
 	double	distance;
 	double	pixel;
 	int		direction;
+	int		door_found;
 }	t_ray;
 
 typedef	struct s_simray
@@ -145,6 +147,31 @@ typedef struct s_calc_data
 	int		door_found;
 }	t_calc_data;
 
+typedef struct s_door
+{
+	int x;
+	int y;
+	double open;
+	struct	s_door	*next;
+}	t_door;
+
+typedef struct s_sprite
+{
+	int x;
+	int y;
+	struct	s_sprite	*next;
+}	t_sprite;
+
+typedef struct s_input
+{
+	int	front;
+	int back;
+	int left;
+	int right;
+	int turn_left;
+	int turn_right;
+}	t_input;
+
 typedef struct s_game
 {
 	void		*mlx_ptr;
@@ -160,7 +187,14 @@ typedef struct s_game
 	t_calc_data	first_ray;
 	t_calc_data	last_ray;
 	int			free_mouse;
-
+	int			door_coord_x;
+	int			door_coord_y;
+	double 		pixel;
+	t_input		input;
+	t_door		*doors;
+	long long	frame;
+	double		door_offset;
+	t_sprite	*sprites;
 }	t_game;
 
 void		ft_check_input(int argc, char **argv, t_game *game);
@@ -172,6 +206,7 @@ int			close_game(t_game *game);
 void		raycasting(t_game *game);
 void		ft_check_map(t_game *game);
 int			manage_input(int keysym, t_game *game);
+int			manage_input_release(int keysym, t_game *game);
 t_ray		calculate_distance_to_wall(t_game *game, t_ray ray);
 int			my_mlx_pixel_get(t_data2 *data, int x, int y);
 void		my_mlx_pixel_put(t_data2 *data, int x, int y, int color);
@@ -180,7 +215,7 @@ int			manage_mouse(int button, int x, int y, t_game *game);
 void		draw_minimap(t_game *game);
 int			convert_color(t_colour color);
 void		init_images_colours(t_game *game);
-void		ft_init_locations(t_game *game);
+void		ft_init(t_game *game);
 void		ft_init_mlx(t_game *game);
 void		ft_init_win(t_game *game);
 int			ft_atoi_image(char *nptr, int i);
@@ -190,5 +225,9 @@ void		draw_character_line_of_sight(t_game *game);
 int			char_part_of_map(char c);
 void		check_surrounded(t_game *game);
 t_calc_data	calc_door(t_game *game, t_ray ray, t_calc_data data);
+long long	millitimestamp(void);
+int			manage_frames(t_game *game);
+void		save_sprite(t_game *game, int x, int y);
+void		draw_sprites(t_game *game);
 
 #endif
