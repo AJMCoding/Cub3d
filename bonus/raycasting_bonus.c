@@ -135,11 +135,20 @@ void	raycasting(t_game *game)
 		ray = calculate_ray_angle(game, rays);
 		ray = calculate_distance_to_wall(game, ray);
 		draw_wall(ray, game);
-		if (ray.num == 0)	
-			printf("ray %f\n", ray.distance);
-		draw_sprites(game);
+		//if (ray.num == 0)	
+			//printf("ray %f\n", ray.distance);
+		//draw_sprites(game);
 		rays ++;
+		game->distances[rays] = ray.distance;
 	}
+	t_sprite *tmp;
+	tmp = game->sprites;
+/* 	while (tmp != NULL)
+	{
+		printf("x:%d y:%d\n", tmp->x, tmp->y);
+		tmp = tmp->next;
+	} */
+	draw_sprites(game);
 	draw_minimap(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img.img, 0, 0);
 }

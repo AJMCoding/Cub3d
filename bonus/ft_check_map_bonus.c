@@ -4,15 +4,15 @@ void	update_direction2(t_game *game, char direction)
 {
 	if (direction == 'W')
 	{
-		game->pl.dir.x = 0.0;
-		game->pl.dir.y = -1.0;
+		game->pl.dir.x = 0.0000;
+		game->pl.dir.y = -1.0000;
 		game->pl.plane.x = -0.66;
 		game->pl.plane.y = 0.0;
 	}
 	if (direction == 'E')
 	{
-		game->pl.dir.x = 0.0;
-		game->pl.dir.y = 1.0;
+		game->pl.dir.x = 0.0000;
+		game->pl.dir.y = 1.0000;
 		game->pl.plane.x = 0.66;
 		game->pl.plane.y = 0.0;
 	}
@@ -24,15 +24,15 @@ void	update_direction(t_game *game, char direction, int i, int j)
 	game->pl.pos.y = j + 0.5;
 	if (direction == 'N')
 	{
-		game->pl.dir.x = -1.0;
-		game->pl.dir.y = 0.0;
+		game->pl.dir.x = -1.0000;
+		game->pl.dir.y = 0.0000;
 		game->pl.plane.x = 0.0;
 		game->pl.plane.y = 0.66;
 	}
 	if (direction == 'S')
 	{
-		game->pl.dir.x = 1.0;
-		game->pl.dir.y = 0.0;
+		game->pl.dir.x = 1.0000;
+		game->pl.dir.y = 0.0000;
 		game->pl.plane.x = 0.0;
 		game->pl.plane.y = -0.66;
 	}

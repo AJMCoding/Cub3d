@@ -47,6 +47,8 @@ t_calc_data	calculate_ray2(t_game *game, t_ray ray, t_calc_data data)
 t_calc_data	calculate_ray(t_game *game, t_ray ray, t_calc_data data)
 {
 	data = calculate_ray2(game, ray, data);
+	if (game->map.full[(int)game->pl.pos.x][(int)game->pl.pos.y] == 'P')
+		save_sprite(game, (int)game->pl.pos.x, (int)game->pl.pos.y);
 	while (data.hit == 0)
 	{
 		if (data.sidedistx < data.sidedisty)

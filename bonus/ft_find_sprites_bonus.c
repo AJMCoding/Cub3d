@@ -10,6 +10,10 @@ int	find_image_type(char *str, int i)
 		return (3);
 	if (str[i] == 'E' && str[i + 1] == 'A' && str[i + 2] == ' ')
 		return (4);
+	if (str[i] == 'S' && str[i + 1] == 'P' && str[i + 2] == ' ')
+		return (5);
+	if (str[i] == 'D' && str[i + 1] == 'O' && str[i + 2] == ' ')
+		return (6);
 	return (0);
 }
 
@@ -34,6 +38,10 @@ int	add_image(t_game *game, char *str, int i)
 		game->locations.west = ft_strldup(str + i, j);
 	if (mode == 4)
 		game->locations.east = ft_strldup(str + i, j);
+	if (mode == 5)
+		game->locations.sprite = ft_strldup(str + i, j);
+	if (mode == 6)
+		game->locations.door = ft_strldup(str + i, j);
 	return (i + j);
 }
 
@@ -53,6 +61,10 @@ void	check_all_found_error(t_game *game)
 	if (game->locations.floor.red == -1 || game->locations.floor.green == -1
 		|| game->locations.floor.blue == -1)
 		ft_error_msg("The floor colour is missing.", game);
+	if (game->locations.sprite == NULL)
+		ft_error_msg("The sprite image is missing.", game);
+	if (game->locations.door == NULL)
+		ft_error_msg("The door image is missing.", game);
 }
 
 int	check_all_found(t_game *game)
@@ -66,7 +78,9 @@ int	check_all_found(t_game *game)
 		&& game->locations.ceiling.blue != -1
 		&& game->locations.floor.red != -1
 		&& game->locations.floor.green != -1
-		&& game->locations.floor.blue != -1)
+		&& game->locations.floor.blue != -1
+		&& game->locations.sprite != NULL
+		&& game->locations.door != NULL)
 		return (1);
 	return (0);
 }

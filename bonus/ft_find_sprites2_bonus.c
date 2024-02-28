@@ -10,6 +10,10 @@ int	compare_to_identifier(char *str, int i)
 		return (1);
 	if (str[i] == 'E' && str[i + 1] == 'A' && str[i + 2] == ' ')
 		return (1);
+	if (str[i] == 'S' && str[i + 1] == 'P' && str[i + 2] == ' ')
+		return (1);
+	if (str[i] == 'D' && str[i + 1] == 'O' && str[i + 2] == ' ')
+		return (1);
 	if (str[i] == 'F' && str[i + 1] == ' ')
 		return (2);
 	if (str[i] == 'C' && str[i + 1] == ' ')

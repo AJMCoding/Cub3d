@@ -6,7 +6,7 @@
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:17:26 by fstark            #+#    #+#             */
-/*   Updated: 2024/02/27 18:26:55 by fstark           ###   ########.fr       */
+/*   Updated: 2024/02/28 16:06:13 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ typedef struct s_locations
 	char		*east;
 	char		*north;
 	char		*south;
+	char		*sprite;
+	char		*door;
 	t_colour	floor;
 	t_colour	ceiling;
 }	t_locations;
@@ -103,6 +105,10 @@ typedef struct s_images
 	t_data2		north_data;
 	t_image		south;
 	t_data2		south_data;
+	t_image		sprite;
+	t_data2		sprite_data;
+	t_image		door;
+	t_data2		door_data;
 	int			floor;
 	int			ceiling;
 }	t_images;
@@ -159,6 +165,7 @@ typedef struct s_sprite
 {
 	int x;
 	int y;
+	int printed;
 	struct	s_sprite	*next;
 }	t_sprite;
 
@@ -195,9 +202,11 @@ typedef struct s_game
 	long long	frame;
 	double		door_offset;
 	t_sprite	*sprites;
+	double		*distances;
 }	t_game;
 
 void		ft_check_input(int argc, char **argv, t_game *game);
+void		free_game_sprites(t_game *game);
 void		ft_error_msg(char *message, t_game *game);
 void		ft_read_map(t_game *game, char *argv);
 char		*ft_strldup(char *s, size_t len);

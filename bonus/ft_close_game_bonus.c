@@ -43,7 +43,10 @@ void	free_allocated_memory(t_game *game)
 			free(game->map.full[str++]);
 		free(game->map.full);
 	}
+	free_game_sprites(game);
 	free(game);
+	if (game->distances != NULL)
+		free(game->distances);	
 }
 
 int	close_game(t_game *game)

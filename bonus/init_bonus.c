@@ -20,6 +20,14 @@ void	init_images_colours2(t_game *game)
 			&game->images.south_data.bits_per_pixel,
 			&game->images.south_data.line_length,
 			&game->images.south_data.endian);
+	game->images.sprite_data.addr = mlx_get_data_addr(game->images.sprite.xpm_ptr,
+			&game->images.sprite_data.bits_per_pixel,
+			&game->images.sprite_data.line_length,
+			&game->images.sprite_data.endian);
+	game->images.door_data.addr = mlx_get_data_addr(game->images.door.xpm_ptr,
+			&game->images.door_data.bits_per_pixel,
+			&game->images.door_data.line_length,
+			&game->images.door_data.endian);
 }
 
 void	init_images_colours(t_game *game)
@@ -44,6 +52,16 @@ void	init_images_colours(t_game *game)
 			&game->images.south.height);
 	if (game->images.south.xpm_ptr == NULL)
 		ft_error_msg("Couldn't find the south texture.", game);
+	game->images.sprite.xpm_ptr = mlx_xpm_file_to_image(game->mlx_ptr,
+			game->locations.sprite, &game->images.sprite.width,
+			&game->images.sprite.height);
+	if (game->images.sprite.xpm_ptr == NULL)
+		ft_error_msg("Couldn't find the sprite texture.", game);
+	game->images.door.xpm_ptr = mlx_xpm_file_to_image(game->mlx_ptr,
+			game->locations.door, &game->images.door.width,
+			&game->images.door.height);
+	if (game->images.door.xpm_ptr == NULL)
+		ft_error_msg("Couldn't find the door texture.", game);
 	init_images_colours2(game);
 }
 
@@ -53,6 +71,8 @@ void	ft_init(t_game *game)
 	game->locations.east = NULL;
 	game->locations.north = NULL;
 	game->locations.south = NULL;
+	game->locations.sprite = NULL;
+	game->locations.door = NULL;
 	game->locations.ceiling.red = -1;
 	game->locations.ceiling.green = -1;
 	game->locations.ceiling.blue = -1;
@@ -63,6 +83,8 @@ void	ft_init(t_game *game)
 	game->images.east.xpm_ptr = NULL;
 	game->images.north.xpm_ptr = NULL;
 	game->images.south.xpm_ptr = NULL;
+	game->images.sprite.xpm_ptr = NULL;
+	game->images.door.xpm_ptr = NULL;
 	game->free_mouse = 0;
 	game->input.front = 0;
 	game->input.back = 0;
@@ -71,6 +93,10 @@ void	ft_init(t_game *game)
 	game->input.turn_left = 0;
 	game->input.turn_right = 0;
 	game->sprites = NULL;
+	game->distances = NULL;
+	game->distances = malloc(sizeof(double) * WIN_WIDTH);
+	if (game->distances == NULL)
+		ft_error_msg("Malloc Error", game);
 }
 
 void	ft_init_mlx(t_game *game)
