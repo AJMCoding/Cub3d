@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	compare_to_identifier(char *str, int i)
 {
@@ -9,6 +9,14 @@ int	compare_to_identifier(char *str, int i)
 	if (str[i] == 'W' && str[i + 1] == 'E' && str[i + 2] == ' ')
 		return (1);
 	if (str[i] == 'E' && str[i + 1] == 'A' && str[i + 2] == ' ')
+		return (1);
+	if (str[i] == 'S' && str[i + 1] == 'P' && str[i + 2] == ' ')
+		return (1);
+	if (str[i] == 'D' && str[i + 1] == 'O' && str[i + 2] == ' ')
+		return (1);
+	if (str[i] == 'A' && str[i + 1] == '1' && str[i + 2] == ' ')
+		return (1);
+	if (str[i] == 'A' && str[i + 1] == '2' && str[i + 2] == ' ')
 		return (1);
 	if (str[i] == 'F' && str[i + 1] == ' ')
 		return (2);

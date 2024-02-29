@@ -53,3 +53,13 @@ char	*ft_strldup(char *s, size_t len)
 	sub_str[i] = '\0';
 	return (sub_str);
 }
+
+char	*ft_strldup_save(char *s, size_t len, t_game *game)
+{
+	char *str;
+
+	str = ft_strldup(s, len);
+	if (str == NULL)
+		ft_error_msg("Malloc error.", game);
+	return (str);
+}

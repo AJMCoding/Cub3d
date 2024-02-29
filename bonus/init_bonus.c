@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	init_images_colours2(t_game *game)
 {
@@ -20,6 +20,22 @@ void	init_images_colours2(t_game *game)
 			&game->images.south_data.bits_per_pixel,
 			&game->images.south_data.line_length,
 			&game->images.south_data.endian);
+	game->images.sprite_data.addr = mlx_get_data_addr(game->images.sprite.xpm_ptr,
+			&game->images.sprite_data.bits_per_pixel,
+			&game->images.sprite_data.line_length,
+			&game->images.sprite_data.endian);
+	game->images.door_data.addr = mlx_get_data_addr(game->images.door.xpm_ptr,
+			&game->images.door_data.bits_per_pixel,
+			&game->images.door_data.line_length,
+			&game->images.door_data.endian);
+	game->images.a_sprite1_data.addr = mlx_get_data_addr(game->images.a_sprite1.xpm_ptr,
+			&game->images.a_sprite1_data.bits_per_pixel,
+			&game->images.a_sprite1_data.line_length,
+			&game->images.a_sprite1_data.endian);
+	game->images.a_sprite2_data.addr = mlx_get_data_addr(game->images.a_sprite2.xpm_ptr,
+			&game->images.a_sprite2_data.bits_per_pixel,
+			&game->images.a_sprite2_data.line_length,
+			&game->images.a_sprite2_data.endian);		
 }
 
 void	init_images_colours(t_game *game)
@@ -44,15 +60,39 @@ void	init_images_colours(t_game *game)
 			&game->images.south.height);
 	if (game->images.south.xpm_ptr == NULL)
 		ft_error_msg("Couldn't find the south texture.", game);
+	game->images.sprite.xpm_ptr = mlx_xpm_file_to_image(game->mlx_ptr,
+			game->locations.sprite, &game->images.sprite.width,
+			&game->images.sprite.height);
+	if (game->images.sprite.xpm_ptr == NULL)
+		ft_error_msg("Couldn't find the sprite texture.", game);
+	game->images.door.xpm_ptr = mlx_xpm_file_to_image(game->mlx_ptr,
+			game->locations.door, &game->images.door.width,
+			&game->images.door.height);
+	if (game->images.door.xpm_ptr == NULL)
+		ft_error_msg("Couldn't find the door texture.", game);
+	game->images.a_sprite1.xpm_ptr = mlx_xpm_file_to_image(game->mlx_ptr,
+			game->locations.a_sprite1, &game->images.a_sprite1.width,
+			&game->images.a_sprite1.height);
+	if (game->images.a_sprite1.xpm_ptr == NULL)
+		ft_error_msg("Couldn't find the first frame of the animated sprite.", game);
+	game->images.a_sprite2.xpm_ptr = mlx_xpm_file_to_image(game->mlx_ptr,
+			game->locations.a_sprite2, &game->images.a_sprite2.width,
+			&game->images.a_sprite2.height);
+	if (game->images.a_sprite2.xpm_ptr == NULL)
+		ft_error_msg("Couldn't find the second frame of the animated sprite.", game);
 	init_images_colours2(game);
 }
 
-void	ft_init_locations(t_game *game)
+void	ft_init(t_game *game)
 {
 	game->locations.west = NULL;
 	game->locations.east = NULL;
 	game->locations.north = NULL;
 	game->locations.south = NULL;
+	game->locations.sprite = NULL;
+	game->locations.a_sprite1 = NULL;
+	game->locations.a_sprite2 = NULL;
+	game->locations.door = NULL;
 	game->locations.ceiling.red = -1;
 	game->locations.ceiling.green = -1;
 	game->locations.ceiling.blue = -1;
@@ -63,7 +103,24 @@ void	ft_init_locations(t_game *game)
 	game->images.east.xpm_ptr = NULL;
 	game->images.north.xpm_ptr = NULL;
 	game->images.south.xpm_ptr = NULL;
+	game->images.sprite.xpm_ptr = NULL;
+	game->images.door.xpm_ptr = NULL;
+	game->images.a_sprite1.xpm_ptr = NULL;
+	game->images.a_sprite2.xpm_ptr = NULL;
 	game->free_mouse = 0;
+	game->input.front = 0;
+	game->input.back = 0;
+	game->input.left = 0;
+	game->input.right = 0;
+	game->input.turn_left = 0;
+	game->input.turn_right = 0;
+	game->sprites = NULL;
+	game->doors = NULL;
+	game->distances = NULL;
+	game->frame_num = 0;
+	game->distances = malloc(sizeof(double) * WIN_WIDTH);
+	if (game->distances == NULL)
+		ft_error_msg("Malloc Error", game);
 }
 
 void	ft_init_mlx(t_game *game)

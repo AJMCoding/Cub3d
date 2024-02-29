@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	free_allocated_memory2(t_game *game)
 {
@@ -10,6 +10,14 @@ void	free_allocated_memory2(t_game *game)
 		free(game->locations.east);
 	if (game->locations.west != NULL)
 		free(game->locations.west);
+	if (game->locations.sprite != NULL)
+		free(game->locations.sprite);
+	if (game->locations.door != NULL)
+		free(game->locations.door);
+	if (game->locations.a_sprite1 != NULL)
+		free(game->locations.a_sprite1);
+	if (game->locations.a_sprite2 != NULL)
+		free(game->locations.a_sprite2);
 	if (game->images.west.xpm_ptr != NULL)
 		mlx_destroy_image(game->mlx_ptr, game->images.west.xpm_ptr);
 	if (game->images.east.xpm_ptr != NULL)
@@ -18,6 +26,30 @@ void	free_allocated_memory2(t_game *game)
 		mlx_destroy_image(game->mlx_ptr, game->images.north.xpm_ptr);
 	if (game->images.south.xpm_ptr != NULL)
 		mlx_destroy_image(game->mlx_ptr, game->images.south.xpm_ptr);
+	if (game->images.sprite.xpm_ptr != NULL)
+		mlx_destroy_image(game->mlx_ptr, game->images.sprite.xpm_ptr);
+	if (game->images.door.xpm_ptr != NULL)
+		mlx_destroy_image(game->mlx_ptr, game->images.door.xpm_ptr);
+	if (game->images.a_sprite1.xpm_ptr != NULL)
+		mlx_destroy_image(game->mlx_ptr, game->images.a_sprite1.xpm_ptr);
+	if (game->images.a_sprite2.xpm_ptr != NULL)
+		mlx_destroy_image(game->mlx_ptr, game->images.a_sprite2.xpm_ptr);
+}
+
+void	free_game_doors(t_game *game)
+{
+	t_door	*tmp;
+	t_door	*tmp2;
+
+	if (game->doors == NULL)
+		return ;
+	tmp = game->doors;
+	while (tmp != NULL)
+	{
+		tmp2 = tmp->next;
+		free(tmp);
+		tmp = tmp2;
+	}
 }
 
 void	free_allocated_memory(t_game *game)
@@ -43,6 +75,10 @@ void	free_allocated_memory(t_game *game)
 			free(game->map.full[str++]);
 		free(game->map.full);
 	}
+	free_game_sprites(game);
+	free_game_doors(game);
+	if (game->distances != NULL)
+		free(game->distances);
 	free(game);
 }
 

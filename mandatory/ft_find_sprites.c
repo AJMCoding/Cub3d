@@ -27,13 +27,13 @@ int	add_image(t_game *game, char *str, int i)
 		&& str[i + j] != ' ' && str[i + j] != '\t')
 		j++;
 	if (mode == 1)
-		game->locations.north = ft_strldup(str + i, j);
+		game->locations.north = ft_strldup_save(str + i, j, game);
 	if (mode == 2)
-		game->locations.south = ft_strldup(str + i, j);
+		game->locations.south = ft_strldup_save(str + i, j, game);
 	if (mode == 3)
-		game->locations.west = ft_strldup(str + i, j);
+		game->locations.west = ft_strldup_save(str + i, j, game);
 	if (mode == 4)
-		game->locations.east = ft_strldup(str + i, j);
+		game->locations.east = ft_strldup_save(str + i, j, game);
 	return (i + j);
 }
 

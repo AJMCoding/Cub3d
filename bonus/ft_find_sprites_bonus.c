@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	find_image_type(char *str, int i)
 {
@@ -10,6 +10,14 @@ int	find_image_type(char *str, int i)
 		return (3);
 	if (str[i] == 'E' && str[i + 1] == 'A' && str[i + 2] == ' ')
 		return (4);
+	if (str[i] == 'S' && str[i + 1] == 'P' && str[i + 2] == ' ')
+		return (5);
+	if (str[i] == 'D' && str[i + 1] == 'O' && str[i + 2] == ' ')
+		return (6);
+	if (str[i] == 'A' && str[i + 1] == '1' && str[i + 2] == ' ')
+		return (7);
+	if (str[i] == 'A' && str[i + 1] == '2' && str[i + 2] == ' ')
+		return (8);
 	return (0);
 }
 
@@ -27,13 +35,21 @@ int	add_image(t_game *game, char *str, int i)
 		&& str[i + j] != ' ' && str[i + j] != '\t')
 		j++;
 	if (mode == 1)
-		game->locations.north = ft_strldup(str + i, j);
+		game->locations.north = ft_strldup_save(str + i, j, game);
 	if (mode == 2)
-		game->locations.south = ft_strldup(str + i, j);
+		game->locations.south = ft_strldup_save(str + i, j, game);
 	if (mode == 3)
-		game->locations.west = ft_strldup(str + i, j);
+		game->locations.west = ft_strldup_save(str + i, j, game);
 	if (mode == 4)
-		game->locations.east = ft_strldup(str + i, j);
+		game->locations.east = ft_strldup_save(str + i, j, game);
+	if (mode == 5)
+		game->locations.sprite = ft_strldup_save(str + i, j, game);
+	if (mode == 6)
+		game->locations.door = ft_strldup_save(str + i, j, game);
+	if (mode == 7)
+		game->locations.a_sprite1 = ft_strldup_save(str + i, j, game);
+	if (mode == 8)
+		game->locations.a_sprite2 = ft_strldup_save(str + i, j, game);
 	return (i + j);
 }
 
@@ -53,6 +69,14 @@ void	check_all_found_error(t_game *game)
 	if (game->locations.floor.red == -1 || game->locations.floor.green == -1
 		|| game->locations.floor.blue == -1)
 		ft_error_msg("The floor colour is missing.", game);
+	if (game->locations.sprite == NULL)
+		ft_error_msg("The sprite image is missing.", game);
+	if (game->locations.door == NULL)
+		ft_error_msg("The door image is missing.", game);
+	if (game->locations.a_sprite1 == NULL)
+		ft_error_msg("The first frame of the animated sprite is missing.", game);
+	if (game->locations.a_sprite2 == NULL)
+		ft_error_msg("The second frame of the animated sprite is missing.", game);
 }
 
 int	check_all_found(t_game *game)
@@ -66,7 +90,11 @@ int	check_all_found(t_game *game)
 		&& game->locations.ceiling.blue != -1
 		&& game->locations.floor.red != -1
 		&& game->locations.floor.green != -1
-		&& game->locations.floor.blue != -1)
+		&& game->locations.floor.blue != -1
+		&& game->locations.sprite != NULL
+		&& game->locations.door != NULL
+		&& game->locations.a_sprite1 != NULL
+		&& game->locations.a_sprite2 != NULL)
 		return (1);
 	return (0);
 }
