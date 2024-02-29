@@ -16,7 +16,8 @@ SRCS            =	main.c ft_check_input.c ft_close_game.c ft_read_map.c \
 SRCS_BONUS      =	main_bonus.c ft_check_input_bonus.c ft_close_game_bonus.c ft_read_map_bonus.c \
 					ft_find_sprites_bonus.c raycasting_bonus.c ft_manage_input_bonus.c ft_check_map_bonus.c \
 					raycasting_utils_bonus.c raycasting_calc_bonus.c minimap_bonus.c init_bonus.c utils_bonus.c \
-					ft_find_sprites2_bonus.c minimap_player_bonus.c ft_check_map_surrounded_bonus.c calc_door_bonus.c sprites_bonus.c\
+					ft_find_sprites2_bonus.c minimap_player_bonus.c ft_check_map_surrounded_bonus.c \
+					calc_door_bonus.c sprites_bonus.c sprites_utils_bonus.c\
 
 SRCS_DIR			=	mandatory
 SRCS_DIR_BONUS		=	bonus

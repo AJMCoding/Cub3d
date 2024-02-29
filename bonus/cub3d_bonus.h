@@ -6,7 +6,7 @@
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:17:26 by fstark            #+#    #+#             */
-/*   Updated: 2024/02/28 16:06:13 by fstark           ###   ########.fr       */
+/*   Updated: 2024/02/29 15:08:26 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,16 @@ typedef struct s_input
 	int turn_right;
 }	t_input;
 
+typedef struct s_sprite_calc
+{
+	double angle;
+	double distance;
+	double range;
+	double relative_angle;
+	double true_angle;
+	double starting_point;
+}	t_sprite_calc;
+
 typedef struct s_game
 {
 	void		*mlx_ptr;
@@ -205,38 +215,42 @@ typedef struct s_game
 	double		*distances;
 }	t_game;
 
-void		ft_check_input(int argc, char **argv, t_game *game);
-void		free_game_sprites(t_game *game);
-void		ft_error_msg(char *message, t_game *game);
-void		ft_read_map(t_game *game, char *argv);
-char		*ft_strldup(char *s, size_t len);
-int			find_sprites(t_game *game, char *str);
-int			close_game(t_game *game);
-void		raycasting(t_game *game);
-void		ft_check_map(t_game *game);
-int			manage_input(int keysym, t_game *game);
-int			manage_input_release(int keysym, t_game *game);
-t_ray		calculate_distance_to_wall(t_game *game, t_ray ray);
-int			my_mlx_pixel_get(t_data2 *data, int x, int y);
-void		my_mlx_pixel_put(t_data2 *data, int x, int y, int color);
-int			update_frame(t_game *game);
-int			manage_mouse(int button, int x, int y, t_game *game);
-void		draw_minimap(t_game *game);
-int			convert_color(t_colour color);
-void		init_images_colours(t_game *game);
-void		ft_init(t_game *game);
-void		ft_init_mlx(t_game *game);
-void		ft_init_win(t_game *game);
-int			ft_atoi_image(char *nptr, int i);
-int			add_colour(t_game *game, char *str, int i);
-int			compare_to_identifier(char *str, int i);
-void		draw_character_line_of_sight(t_game *game);
-int			char_part_of_map(char c);
-void		check_surrounded(t_game *game);
-t_calc_data	calc_door(t_game *game, t_ray ray, t_calc_data data);
-long long	millitimestamp(void);
-int			manage_frames(t_game *game);
-void		save_sprite(t_game *game, int x, int y);
-void		draw_sprites(t_game *game);
+void			ft_check_input(int argc, char **argv, t_game *game);
+void			free_game_sprites(t_game *game);
+void			ft_error_msg(char *message, t_game *game);
+void			ft_read_map(t_game *game, char *argv);
+char			*ft_strldup(char *s, size_t len);
+int				find_sprites(t_game *game, char *str);
+int				close_game(t_game *game);
+void			raycasting(t_game *game);
+void			ft_check_map(t_game *game);
+int				manage_input(int keysym, t_game *game);
+int				manage_input_release(int keysym, t_game *game);
+t_ray			calculate_distance_to_wall(t_game *game, t_ray ray);
+int				my_mlx_pixel_get(t_data2 *data, int x, int y);
+void			my_mlx_pixel_put(t_data2 *data, int x, int y, int color);
+int				update_frame(t_game *game);
+int				manage_mouse(int button, int x, int y, t_game *game);
+void			draw_minimap(t_game *game);
+int				convert_color(t_colour color);
+void			init_images_colours(t_game *game);
+void			ft_init(t_game *game);
+void			ft_init_mlx(t_game *game);
+void			ft_init_win(t_game *game);
+int				ft_atoi_image(char *nptr, int i);
+int				add_colour(t_game *game, char *str, int i);
+int				compare_to_identifier(char *str, int i);
+void			draw_character_line_of_sight(t_game *game);
+int				char_part_of_map(char c);
+void			check_surrounded(t_game *game);
+t_calc_data		calc_door(t_game *game, t_ray ray, t_calc_data data);
+long long		millitimestamp(void);
+int				manage_frames(t_game *game);
+void			save_sprite(t_game *game, int x, int y);
+void			draw_sprites(t_game *game);
+double			convert_angle(double angle, double range);
+t_sprite_calc	calc_sprite(t_game *game, double x, double y);
+int				list_size_sprites(t_sprite *sprites);
+int				compare_range(t_sprite *tmp, t_sprite *tmp2, t_game *game);
 
 #endif
