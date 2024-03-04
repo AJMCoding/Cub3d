@@ -56,7 +56,7 @@ char	*ft_strldup(char *s, size_t len)
 
 char	*ft_strldup_save(char *s, size_t len, t_game *game)
 {
-	char *str;
+	char	*str;
 
 	str = ft_strldup(s, len);
 	if (str == NULL)

@@ -17,7 +17,9 @@ SRCS_BONUS      =	main_bonus.c ft_check_input_bonus.c ft_close_game_bonus.c ft_r
 					ft_find_sprites_bonus.c raycasting_bonus.c ft_manage_input_bonus.c ft_check_map_bonus.c \
 					raycasting_utils_bonus.c raycasting_calc_bonus.c minimap_bonus.c init_bonus.c utils_bonus.c \
 					ft_find_sprites2_bonus.c minimap_player_bonus.c ft_check_map_surrounded_bonus.c \
-					calc_door_bonus.c sprites_bonus.c sprites_utils_bonus.c\
+					calc_door_bonus.c sprites_bonus.c sprites_utils_bonus.c ft_manage_input_movement_bonus.c\
+					sprites_2.c init_images_bonus.c free_alocated_memory.c calc_door_2_bonus.c \
+					raycasting_calc_2_bonus.c utils_bonus_2.c\
 
 SRCS_DIR			=	mandatory
 SRCS_DIR_BONUS		=	bonus
@@ -67,7 +69,9 @@ fclean: 		    clean
 
 re: 			fclean all
 
+re_b:			fclean bonus
+
 run:			${NAME}
 				${VALGRIND} ./${NAME} map.ber
 
-.PHONY: 		all clean fclean re run libft
+.PHONY: 		all clean fclean re re_b run libft

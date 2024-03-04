@@ -89,10 +89,8 @@ void	check_parameters(t_game *game, int i, int j)
 		}
 		i++;
 	}
-	if (found > 1)
-		ft_error_msg("The map has to many players.", game);
-	if (found == 0)
-		ft_error_msg("The map has no player.", game);
+	if (found != 1)
+		ft_error_msg("The map has the wrong amount of players.", game);
 }
 
 void	ft_check_map(t_game *game)

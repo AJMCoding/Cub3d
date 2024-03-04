@@ -18,3 +18,24 @@ int	my_mlx_pixel_get(t_data2 *data, int x, int y)
 	color = *(unsigned int *)dst;
 	return (color);
 }
+
+void	draw_floor_ceiling(t_game *game, t_data2 img)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	while (x < WIN_WIDTH)
+	{
+		y = 0;
+		while (y < WIN_HEIGHT)
+		{
+			if (y < WIN_HEIGHT / 2)
+				my_mlx_pixel_put(&img, x, y, game->images.floor);
+			else
+				my_mlx_pixel_put(&img, x, y, game->images.ceiling);
+			y++;
+		}
+		x++;
+	}
+}

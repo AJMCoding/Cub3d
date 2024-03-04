@@ -2,29 +2,29 @@
 
 double	convert_angle(double angle, double range)
 {
-	angle = angle * 180.0/3.14159265358979323846 - 180.0;
-	//angle = angle + ;
+	double	sp;
+
+	angle = angle * 180.0 / 3.14159265358979323846 - 180.0;
 	(void)range;
-	double	starting_point = ((float)WIN_WIDTH / 2) - (int)(angle * ((double)WIN_WIDTH / 66));
-	//printf("starting_point: %f\n", starting_point);
-	return (starting_point);
+	sp = ((float)WIN_WIDTH / 2) - (int)(angle * ((double)WIN_WIDTH / 66));
+	return (sp);
 }
 
 t_sprite_calc	calc_sprite(t_game *game, double x, double y)
 {
 	t_sprite_calc	calc;
 
-	calc.distance = sqrt((game->pl.pos.x - x) * (game->pl.pos.x - x) + (game->pl.pos.y - y) * (game->pl.pos.y - y));
+	calc.distance = sqrt((game->pl.pos.x - x) * (game->pl.pos.x - x)
+			+ (game->pl.pos.y - y) * (game->pl.pos.y - y));
 	calc.angle = atan2(game->pl.pos.y - y, game->pl.pos.x - x);
 	if (calc.angle < 0)
-		calc.angle = 360/(180.0/3.14159265358979323846) + calc.angle;
-	//calc.range = calc.distance * cos(calc.angle);
+		calc.angle = 360 / (180.0 / PI) + calc.angle;
 	calc.relative_angle = atan2(game->pl.dir.y, game->pl.dir.x);
 	if (calc.relative_angle < 0)
-		calc.relative_angle = 360/(180.0/3.14159265358979323846) + calc.relative_angle;
-	calc.true_angle =  calc.angle - calc.relative_angle;
+		calc.relative_angle = 360 / (180.0 / PI) + calc.relative_angle;
+	calc.true_angle = calc.angle - calc.relative_angle;
 	if (calc.true_angle < 0)
-		calc.true_angle = 360/(180.0/3.14159265358979323846) + calc.true_angle;
+		calc.true_angle = 360 / (180.0 / PI) + calc.true_angle;
 	calc.range = calc.distance * cos(calc.true_angle);
 	calc.range = fabs(calc.range);
 	calc.starting_point = convert_angle(calc.true_angle, calc.range);

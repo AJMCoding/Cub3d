@@ -19,6 +19,33 @@ int	set_ray_direction(t_ray ray, t_calc_data data)
 	}
 }
 
+/* t_calc_data	pos_check(t_game *game, t_ray ray, t_calc_data data)
+{
+	if (game->map.full[ray.map_x][ray.map_y] == 'D')
+		data = calc_door(game, ray, data);
+	if (game->map.full[ray.map_x][ray.map_y] == 'P')
+		save_sprite(game, ray.map_x, ray.map_y, 1);
+	if (game->map.full[ray.map_x][ray.map_y] == 'A')
+		save_sprite(game, ray.map_x, ray.map_y, 2);
+	if (game->map.full[ray.map_x][ray.map_y] == '1')
+		data.hit = 1;
+	return (data);
+}
+
+t_calc_data	calculate_ray3(t_game *game, t_ray ray, t_calc_data data)
+{
+	if (data.door_found == 0)
+	{
+		data.ray_map_x = ray.map_x;
+		data.ray_map_y = ray.map_y;
+	}
+	if (ray.num == 0)
+		game->first_ray = data;
+	if (ray.num == WIN_WIDTH - 1)
+		game->last_ray = data;
+	return (data);
+}
+
 t_calc_data	calculate_ray2(t_game *game, t_ray ray, t_calc_data data)
 {
 	if (ray.dir_x < 0)
@@ -63,43 +90,14 @@ t_calc_data	calculate_ray(t_game *game, t_ray ray, t_calc_data data)
 			ray.map_y += data.stepy;
 			data.side = 1;
 		}
-		if (game->map.full[ray.map_x][ray.map_y] == 'D')
-			data = calc_door(game, ray, data);
-		if (game->map.full[ray.map_x][ray.map_y] == 'P')
-			save_sprite(game, ray.map_x, ray.map_y, 1);
-		if (game->map.full[ray.map_x][ray.map_y] == 'A')
-			save_sprite(game, ray.map_x, ray.map_y, 2);
-		if (game->map.full[ray.map_x][ray.map_y] == '1')
-			data.hit = 1;
+		data = pos_check(game, ray, data);
 	}
-	if (data.door_found == 0)
-	{
-		data.ray_map_x = ray.map_x;
-		data.ray_map_y = ray.map_y;
-	}
-	if (ray.num == 0)
-		game->first_ray = data;
-	if (ray.num == WIN_WIDTH - 1)
-		game->last_ray = data;
+	data = calculate_ray3(game, ray, data);
 	return (data);
-}
+} */
 
-t_ray	calculate_distance_to_wall(t_game *game, t_ray ray)
+t_ray	calculate_distance_to_wall_2(t_game *game, t_ray ray, t_calc_data data)
 {
-	t_calc_data	data;
-
-	data.hit = 0;
-	data.door_found = 0;
-	ray.door_found = 0;
-	if (ray.dir_x == 0.0)
-		data.deltadistx = 1e30;
-	else
-		data.deltadistx = fabs(1.0 / ray.dir_x);
-	if (ray.dir_y == 0.0)
-		data.deltadisty = 1e30;
-	else
-		data.deltadisty = fabs(1.0 / ray.dir_y);
-	data = calculate_ray(game, ray, data);
 	ray.map_x = data.ray_map_x;
 	ray.map_y = data.ray_map_y;
 	if (data.side == 0)
@@ -120,6 +118,26 @@ t_ray	calculate_distance_to_wall(t_game *game, t_ray ray)
 	{
 		ray.door_found = 1;
 	}
+	return (ray);
+}
+
+t_ray	calculate_distance_to_wall(t_game *game, t_ray ray)
+{
+	t_calc_data	data;
+
+	data.hit = 0;
+	data.door_found = 0;
+	ray.door_found = 0;
+	if (ray.dir_x == 0.0)
+		data.deltadistx = 1e30;
+	else
+		data.deltadistx = fabs(1.0 / ray.dir_x);
+	if (ray.dir_y == 0.0)
+		data.deltadisty = 1e30;
+	else
+		data.deltadisty = fabs(1.0 / ray.dir_y);
+	data = calculate_ray(game, ray, data);
+	ray = calculate_distance_to_wall_2(game, ray, data);
 	return (ray);
 }
 

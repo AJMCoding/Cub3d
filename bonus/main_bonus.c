@@ -19,13 +19,13 @@ int	main(int argc, char	**argv)
 	ft_init_mlx(game);
 	ft_init_win(game);
 	init_images_colours(game);
-	//raycasting(game);
 	game->frame = millitimestamp();
 	mlx_mouse_get_pos(game->mlx_ptr, game->win_ptr,
 		&game->mouse_x, &game->mouse_y);
 	mlx_hook(game->win_ptr, DestroyNotify, ButtonPressMask, close_game, game);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, manage_input, game);
-	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, manage_input_release, game);
+	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask,
+		manage_input_release, game);
 	mlx_loop_hook(game->mlx_ptr, manage_frames, game);
 	mlx_loop(game->mlx_ptr);
 }

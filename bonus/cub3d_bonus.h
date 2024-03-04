@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/13 16:17:26 by fstark            #+#    #+#             */
-/*   Updated: 2024/02/29 18:41:13 by fstark           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef CUB3D_BONUS_H
 # define CUB3D_BONUS_H
 
@@ -26,6 +14,8 @@
 
 # define WIN_HEIGHT			540
 # define WIN_WIDTH			960
+
+# define PI					3.14159265358979323846
 
 # define PRESS_W			119
 # define PRESS_Q			113
@@ -189,6 +179,16 @@ typedef struct s_sprite_calc
 	double	starting_point;
 }	t_sprite_calc;
 
+typedef struct s_sprite_drawing
+{
+	double		height;
+	double		width;
+	double		x;
+	double		y;
+	int			i;
+	int			j;
+	int			color;
+}	t_sprite_drawing;
 typedef struct s_game
 {
 	void		*mlx_ptr;
@@ -254,5 +254,16 @@ t_sprite_calc	calc_sprite(t_game *game, double x, double y);
 int				list_size_sprites(t_sprite *sprites);
 int				compare_range(t_sprite *tmp, t_sprite *tmp2, t_game *game);
 char			*ft_strldup_save(char *s, size_t len, t_game *game);
+void			change_player_pos(t_game *g, int direction);
+void			change_player_pos_side(t_game *g, int direction);
+void			rotate_camera(t_game *g, int direction, double i);
+int				find_sprite_color(t_sprite *sprite, int x, int y, t_game *game);
+void			free_allocated_memory(t_game *game);
+t_simray		calc_sim_ray(t_ray ray, t_position current_pos);
+t_position		find_is(t_simray simray, t_calc_data data);
+t_calc_data		calculate_ray(t_game *game, t_ray ray, t_calc_data data);
+void			draw_floor_ceiling(t_game *game, t_data2 img);
+void			movements(t_game *game);
+int				check_all_found(t_game *game);
 
 #endif
