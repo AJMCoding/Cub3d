@@ -84,5 +84,7 @@ void	free_allocated_memory(t_game *game)
 	}
 	if (game->distances != NULL)
 		free(game->distances);
+	if (game->str != NULL)
+		free(game->str);
 	free(game);
 }

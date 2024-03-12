@@ -214,6 +214,7 @@ typedef struct s_game
 	double		door_offset;
 	t_sprite	*sprites;
 	double		*distances;
+	char		*str;
 }	t_game;
 
 void			ft_check_input(int argc, char **argv, t_game *game);

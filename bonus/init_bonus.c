@@ -16,6 +16,10 @@ void	ft_init2(t_game *game)
 	game->sprites = NULL;
 	game->doors = NULL;
 	game->distances = NULL;
+	game->mlx_ptr = NULL;
+	game->win_ptr = NULL;
+	game->map.full = NULL;
+	game->str = NULL;
 	game->frame_num = 0;
 	game->distances = malloc(sizeof(double) * WIN_WIDTH);
 	if (game->distances == NULL)
