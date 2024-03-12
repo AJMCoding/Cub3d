@@ -60,7 +60,7 @@ void	draw_sprites_2(t_game *game)
 
 	tmp = game->sprites;
 	tmp2 = game->sprites;
-	while (tmp2->printed == 1)
+	while (tmp2->printed == 1 && tmp2->next != NULL)
 		tmp2 = tmp2->next;
 	while (tmp)
 	{
