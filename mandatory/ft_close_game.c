@@ -43,6 +43,8 @@ void	free_allocated_memory(t_game *game)
 			free(game->map.full[str++]);
 		free(game->map.full);
 	}
+	if (game->str != NULL)
+		free(game->str);
 	free(game);
 }
 

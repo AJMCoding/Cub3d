@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akortvel <akortvel@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:17:26 by fstark            #+#    #+#             */
-/*   Updated: 2024/01/29 16:01:20 by fstark           ###   ########.fr       */
+/*   Updated: 2024/03/12 16:44:14 by akortvel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ typedef struct s_game
 	t_calc_data	first_ray;
 	t_calc_data	last_ray;
 	int			free_mouse;
-
+	char		*str;
 }	t_game;
 
 void	ft_check_input(int argc, char **argv, t_game *game);
