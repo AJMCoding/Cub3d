@@ -71,6 +71,9 @@ re: 			fclean all
 run:
 				@./select_map.sh
 
+r:				${NAME}
+				./${NAME} maps/1.cub
+
 v:				${NAME}
 				${VALGRIND} ./${NAME} maps/1.cub
 
