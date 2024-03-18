@@ -23,22 +23,24 @@ int	find_image_type(char *str, int i)
 
 int	add_image_2(t_game *game, char *str, int j, int mode)
 {
-	if (mode == 1)
+	if (mode == 1 && game->locations.north == NULL)
 		game->locations.north = ft_strldup_save(str, j, game);
-	if (mode == 2)
+	else if (mode == 2 && game->locations.south == NULL)
 		game->locations.south = ft_strldup_save(str, j, game);
-	if (mode == 3)
+	else if (mode == 3 && game->locations.west == NULL)
 		game->locations.west = ft_strldup_save(str, j, game);
-	if (mode == 4)
+	else if (mode == 4 && game->locations.east == NULL)
 		game->locations.east = ft_strldup_save(str, j, game);
-	if (mode == 5)
+	else if (mode == 5 && game->locations.sprite == NULL)
 		game->locations.sprite = ft_strldup_save(str, j, game);
-	if (mode == 6)
+	else if (mode == 6 && game->locations.door == NULL)
 		game->locations.door = ft_strldup_save(str, j, game);
-	if (mode == 7)
+	else if (mode == 7 && game->locations.a_sprite1 == NULL)
 		game->locations.a_sprite1 = ft_strldup_save(str, j, game);
-	if (mode == 8)
+	else if (mode == 8 && game->locations.a_sprite2 == NULL)
 		game->locations.a_sprite2 = ft_strldup_save(str, j, game);
+	else
+		ft_error_msg("Duplicate identifier in the file.", game);
 	return (0);
 }
 
@@ -122,6 +124,8 @@ int	find_sprites(t_game *game, char *str)
 				add_image(game, str, i);
 			else if (compare_to_identifier(str, i) == 2)
 				add_colour(game, str, i);
+			else if (compare_to_identifier(str, i) == 3)
+				ft_error_msg("Image or color is not valid!", game);
 		}
 		i++;
 		if (check_all_found(game) == 1)

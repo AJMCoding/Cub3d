@@ -26,14 +26,16 @@ int	add_image(t_game *game, char *str, int i)
 	while (str[i + j] != '\0' && str[i + j] != '\n'
 		&& str[i + j] != ' ' && str[i + j] != '\t')
 		j++;
-	if (mode == 1)
+	if (mode == 1 && game->locations.north == NULL)
 		game->locations.north = ft_strldup_save(str + i, j, game);
-	if (mode == 2)
+	else if (mode == 2 && game->locations.south == NULL)
 		game->locations.south = ft_strldup_save(str + i, j, game);
-	if (mode == 3)
+	else if (mode == 3 && game->locations.west == NULL)
 		game->locations.west = ft_strldup_save(str + i, j, game);
-	if (mode == 4)
+	else if (mode == 4 && game->locations.east == NULL)
 		game->locations.east = ft_strldup_save(str + i, j, game);
+	else
+		ft_error_msg("Duplicate identifier in the file.", game);
 	return (i + j);
 }
 
@@ -88,6 +90,8 @@ int	find_sprites(t_game *game, char *str)
 				add_image(game, str, i);
 			else if (compare_to_identifier(str, i) == 2)
 				add_colour(game, str, i);
+			else if (compare_to_identifier(str, i) == 3)
+				ft_error_msg("Image or color is not valid!", game);
 		}
 		i++;
 		if (check_all_found(game) == 1)

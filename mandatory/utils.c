@@ -13,8 +13,10 @@ int	convert_color(t_colour color)
 int	ft_atoi_image(char *nptr, int i)
 {
 	long long int	result;
-
+	
 	result = 0;
+	if (nptr[i] < '0' || nptr[i] > '9') //changed
+		return (256);
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
 		if (result > 255)

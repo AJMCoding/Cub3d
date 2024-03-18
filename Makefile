@@ -76,7 +76,13 @@ re_b:			fclean bonus
 run:
 				@./select_map.sh
 
-val:				${NAME}
+val:			${NAME}
 				${VALGRIND} ./${NAME} maps/1.cub
 
-.PHONY: 		all clean fclean re re_b run val libft
+r:				${NAME}
+				./${NAME} maps/test.cub
+
+bon:			${NAME_BONUS}
+				./${NAME_BONUS} maps/bonus/bonus_test.cub
+
+.PHONY: 		all clean fclean re re_b run bon r val libft

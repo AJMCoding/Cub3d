@@ -31,6 +31,25 @@ char	*ft_strjoin_free_str(char *left_str, char *buff)
 	return (str);
 }
 
+int ft_check_line(char *str) // chganged
+{
+	int i;
+
+	i = 0;
+	if (str[i] == '\n')
+		return (0);
+	while (str[i] != '\n' && str[i] != '\0')
+	{
+		if (str[i] == '1' || str[i] == '0' || str[i] == 'N'
+			|| str[i] == 'S' || str[i] == 'W' || str[i] == 'E')
+			return (0);
+		if (str[i] != ' ' && str[i] != '\t')
+			return (1);
+		i++;
+	}
+	return (1);
+}
+
 void	find_map(t_game *game, char *str, int i)
 {
 	char	*str2;
@@ -41,8 +60,12 @@ void	find_map(t_game *game, char *str, int i)
 		if (str[i] == '1' || str[i] == '0' || str[i] == 'N'
 			|| str[i] == 'S' || str[i] == 'W' || str[i] == 'E')
 			break ;
+		else if (ft_check_line(str + i) == 1)
+			ft_error_msg("Found invalid character in the file.", game);
 		i++;
 	}
+	if (str[i] == '\0')
+		ft_error_msg("No map found in the file.", game);
 	while (str[i] != '\n')
 		i--;
 	tmp = i;
@@ -126,12 +149,6 @@ void	ft_read_map(t_game *game, char *argv)
 		ft_error_msg("The Map couldn't be opened.", game);
 	game->str = read_map2(fd);
 	i = close(fd);
-	if (i == -1)
-	{
-		if (game->str != NULL)
-			free(game->str);
-		ft_error_msg("The Map couldn't be closed.", game);
-	}
 	if (game->str == NULL)
 		ft_error_msg("Error while reading the map.", game);
 	i = find_sprites(game, game->str);
