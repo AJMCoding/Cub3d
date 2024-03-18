@@ -84,14 +84,14 @@ int	find_sprites(t_game *game, char *str)
 	{
 		if (str[i] == '\n' || i == 0)
 		{
-			if (str[i] == '\n')
+			if (str[i] == '\n' && str[i + 1] != '\n' && str[i + 1] != '\0')
 				i++;
 			if (compare_to_identifier(str, i) == 1)
 				add_image(game, str, i);
 			else if (compare_to_identifier(str, i) == 2)
 				add_colour(game, str, i);
 			else if (compare_to_identifier(str, i) == 3)
-				ft_error_msg("Not accepted identifier in the file!", game);
+				ft_error_msg("a colour is not valid.", game);
 		}
 		i++;
 		if (check_all_found(game) == 1)

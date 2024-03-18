@@ -147,6 +147,7 @@ typedef struct s_game
 	t_calc_data	first_ray;
 	t_calc_data	last_ray;
 	int			free_mouse;
+	char		*str;
 
 }	t_game;
 

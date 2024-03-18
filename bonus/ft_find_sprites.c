@@ -80,7 +80,7 @@ int	find_sprites(t_game *game, char *str)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] == '\n' || i == 0)
+		if (str[i] == '\n' && str[i + 1] != '\n' && str[i + 1] != '\0')
 		{
 			if (str[i] == '\n')
 				i++;
@@ -88,6 +88,8 @@ int	find_sprites(t_game *game, char *str)
 				add_image(game, str, i);
 			else if (compare_to_identifier(str, i) == 2)
 				add_colour(game, str, i);
+			else if (compare_to_identifier(str, i) == 3)
+				ft_error_msg("a colour is not valid.", game);
 		}
 		i++;
 		if (check_all_found(game) == 1)

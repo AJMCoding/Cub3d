@@ -71,10 +71,10 @@ re: 			fclean all
 run:
 				@./select_map.sh
 
-r:				${NAME}
-				./${NAME} maps/1.cub
+t:				${NAME}
+				./${NAME} maps/test.cub
 
 v:				${NAME}
 				${VALGRIND} ./${NAME} maps/1.cub
 
-.PHONY: 		all clean fclean re run v libft
+.PHONY: 		all clean fclean re run t v libft
