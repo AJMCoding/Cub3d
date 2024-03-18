@@ -80,9 +80,10 @@ int	find_sprites(t_game *game, char *str)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] == '\n' && str[i + 1] != '\n' && str[i + 1] != '\0')
+		if (str[i] == '\n' || i == 0)
 		{
-			if (str[i] == '\n')
+
+			if (str[i] == '\n' && str[i + 1] != '\n' && str[i + 1] != '\0')
 				i++;
 			if (compare_to_identifier(str, i) == 1)
 				add_image(game, str, i);
