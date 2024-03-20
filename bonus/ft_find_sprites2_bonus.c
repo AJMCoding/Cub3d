@@ -99,10 +99,7 @@ int	add_colour(t_game *game, char *str, int i)
 
 	num = 0;
 	mode = find_color_type(str, i);
-	if (mode == 1 && game->locations.floor.red != -1)
-		ft_error_msg("Duplicate identifier in the file.", game);
-	if (mode == 2 && game->locations.ceiling.red != -1)
-		ft_error_msg("Duplicate identifier in the file.", game);
+	ft_duperror_msg(mode, game);
 	i++;
 	while (str[i] == ' ' || str[i] == '\t')
 		i++;

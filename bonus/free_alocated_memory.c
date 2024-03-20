@@ -79,9 +79,7 @@ void	free_allocated_memory(t_game *game)
 	if (game->win_ptr != NULL)
 		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	if (game->img.img != NULL)
-	{
 		mlx_destroy_image(game->mlx_ptr, game->img.img);
-	}
 	if (game->mlx_ptr != NULL)
 	{
 		mlx_destroy_display(game->mlx_ptr);

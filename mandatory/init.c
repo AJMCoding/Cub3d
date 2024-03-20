@@ -79,7 +79,6 @@ void	ft_init_locations(t_game *game)
 	game->win_ptr = NULL;
 	game->map.full = NULL;
 	game->str = NULL;
-	//game->free_mouse = 0;
 }
 
 void	ft_init_mlx(t_game *game)

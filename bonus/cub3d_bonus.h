@@ -278,5 +278,8 @@ t_calc_data		calculate_ray(t_game *game, t_ray ray, t_calc_data data);
 void			draw_floor_ceiling(t_game *game, t_data2 img);
 void			movements(t_game *game);
 int				check_all_found(t_game *game);
+void			ft_duperror_msg(int mode, t_game *game);
+int				find_map_utils(t_game *game, char *str, int i);
+int				ft_check_line(char *str);
 
 #endif

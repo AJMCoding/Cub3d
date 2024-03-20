@@ -1,6 +1,0 @@
-1)  F: 12, 182, 2550 ?? why accept the program his? 
-2) Bonus: check OK, but wrong message!
-            F 51,198,255
-            C 51,198,0
-            F 51,198,255
-                >> Found invalid character in the file.  INSTEAD OF Duplicate identifier in the file.

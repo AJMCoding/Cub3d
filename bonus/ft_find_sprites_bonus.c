@@ -122,10 +122,8 @@ void	check_all_found_error(t_game *game)
 int	find_sprites(t_game *game, char *str)
 {
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
 	while (str[i])
 	{
 		if (str[i] == '\n' || i == 0)

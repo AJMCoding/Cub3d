@@ -43,9 +43,9 @@ char	*ft_strjoin_free_str(char *left_str, char *buff)
 	return (str);
 }
 
-int ft_check_line(char *str) // chganged
+int	ft_check_line(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str[i] == '\n')
@@ -67,20 +67,7 @@ void	find_map(t_game *game, char *str, int i)
 	char	*str2;
 	int		tmp;
 
-	while (str[i] != '\0')
-	{
-		if (str[i] == '1' || str[i] == '0' || str[i] == 'N'
-			|| str[i] == 'S' || str[i] == 'W' || str[i] == 'E')
-			break ;
-		else if (ft_check_line(str + i) == 1)
-			ft_error_msg("Found invalid character in the file.", game);
-		i++;
-	}
-	if (str[i] == '\0')
-		ft_error_msg("No map found in the file.", game);
-	while (str[i] != '\n')
-		i--;
-	tmp = i;
+	tmp = find_map_utils(game, str, i);
 	while (str[tmp] != '\0')
 	{
 		if (str[tmp] == '\n' && str[tmp + 1] == '\n')
