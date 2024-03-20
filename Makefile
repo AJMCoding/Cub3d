@@ -78,7 +78,7 @@ run:
 				@./select_map.sh
 
 val:			${NAME}
-				${VALGRIND} ./${NAME} maps/1.cub
+				${VALGRIND} ./${NAME} maps/mandatory/1.cub
 
 r:				${NAME}
 				./${NAME} maps/test.cub

@@ -12,12 +12,14 @@
 
 #include "cub3d.h"
 
-void	ft_duperror_msg(int mode, t_game *game)
+int	ft_duperror_msg(int mode, t_game *game, int i)
 {
 	if (mode == 1 && game->locations.floor.red != -1)
 		ft_error_msg("Duplicate identifier in the file.", game);
 	if (mode == 2 && game->locations.ceiling.red != -1)
 		ft_error_msg("Duplicate identifier in the file.", game);
+	i++;
+	return (i);
 }
 
 int	find_map_utils(t_game *game, char *str, int i)

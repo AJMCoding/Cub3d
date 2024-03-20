@@ -176,7 +176,7 @@ void		draw_character_line_of_sight(t_game *game);
 int			char_part_of_map(char c);
 void		check_surrounded(t_game *game);
 char		*ft_strldup_save(char *s, size_t len, t_game *game);
-void		ft_duperror_msg(int mode, t_game *game);
+int			ft_duperror_msg(int mode, t_game *game, int i);
 int			find_map_utils(t_game *game, char *str, int i);
 int			ft_check_line(char *str);
 

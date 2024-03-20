@@ -41,7 +41,7 @@ int	compare_to_identifier(char *str, int i)
 	return (0);
 }
 
-int	find_number_length(char *str, int i)
+int	find_number_length(char *str, int i, t_game *game, int num)
 {
 	int	length;
 
@@ -54,7 +54,18 @@ int	find_number_length(char *str, int i)
 			break ;
 		i++;
 	}
-	length++;
+	if (str[i] == ',' && num == 2)
+	{
+		i++;
+		length++;
+	}
+	else if (num == 2)
+		ft_error_msg("A colour is not valid.", game);
+	while ((str[i] == ' ' || str[i] == '\t') && num == 2)
+	{
+		length++;
+		i++;
+	}
 	return (length);
 }
 
@@ -99,8 +110,7 @@ int	add_colour(t_game *game, char *str, int i)
 
 	num = 0;
 	mode = find_color_type(str, i);
-	ft_duperror_msg(mode, game);
-	i++;
+	i = ft_duperror_msg(mode, game, i);
 	while (str[i] == ' ' || str[i] == '\t')
 		i++;
 	while (str[i] != '\0' && str[i] != '\n')
@@ -111,7 +121,10 @@ int	add_colour(t_game *game, char *str, int i)
 				num = add_colour2(mode, ft_atoi_image(str, i), num, game);
 			else
 				ft_error_msg("A colour is not valid.", game);
-			i += find_number_length(str, i);
+			if (num == 3)
+				i += find_number_length(str, i, game, 1);
+			else
+				i += find_number_length(str, i, game, 2);
 		}
 		else
 			break ;
