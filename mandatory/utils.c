@@ -13,8 +13,10 @@ int	convert_color(t_colour color)
 int	ft_atoi_image(char *nptr, int i)
 {
 	long long int	result;
-
+	
 	result = 0;
+	if (nptr[i] < '0' || nptr[i] > '9') //changed
+		return (256);
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
 		if (result > 255)
@@ -52,4 +54,14 @@ char	*ft_strldup(char *s, size_t len)
 	}
 	sub_str[i] = '\0';
 	return (sub_str);
+}
+
+char	*ft_strldup_save(char *s, size_t len, t_game *game)
+{
+	char	*str;
+
+	str = ft_strldup(s, len);
+	if (str == NULL)
+		ft_error_msg("Malloc error.", game);
+	return (str);
 }

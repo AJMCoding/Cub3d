@@ -8,15 +8,20 @@ CFLAGS			=	-Wall -Wextra -Werror -g #-fsanitize=address,leak,undefined
 FLAGS			=	-lreadline
 MINILIBX_FLAGS	=	-lmlx -lXext -lX11 -lm
 
+VALGRIND		=	valgrind --leak-check=full
+
 SRCS            =	main.c ft_check_input.c ft_close_game.c ft_read_map.c \
 					ft_find_sprites.c raycasting.c ft_manage_input.c ft_check_map.c \
 					raycasting_utils.c raycasting_calc.c init.c utils.c \
 					ft_find_sprites2.c ft_check_map_surrounded.c\
 
-SRCS_BONUS      =	main.c ft_check_input.c ft_close_game.c ft_read_map.c \
-					ft_find_sprites.c raycasting.c ft_manage_input.c ft_check_map.c \
-					raycasting_utils.c raycasting_calc.c minimap.c init.c utils.c \
-					ft_find_sprites2.c minimap_player.c ft_check_map_surrounded.c\
+SRCS_BONUS      =	main_bonus.c ft_check_input_bonus.c ft_close_game_bonus.c ft_read_map_bonus.c \
+					ft_find_sprites_bonus.c raycasting_bonus.c ft_manage_input_bonus.c ft_check_map_bonus.c \
+					raycasting_utils_bonus.c raycasting_calc_bonus.c minimap_bonus.c init_bonus.c utils_bonus.c \
+					ft_find_sprites2_bonus.c minimap_player_bonus.c ft_check_map_surrounded_bonus.c \
+					calc_door_bonus.c sprites_bonus.c sprites_utils_bonus.c ft_manage_input_movement_bonus.c\
+					sprites_2.c init_images_bonus.c free_alocated_memory.c calc_door_2_bonus.c \
+					raycasting_calc_2_bonus.c utils_bonus_2.c\
 
 SRCS_DIR			=	mandatory
 SRCS_DIR_BONUS		=	bonus
@@ -66,7 +71,18 @@ fclean: 		    clean
 
 re: 			fclean all
 
-run:			${NAME}
-				${VALGRIND} ./${NAME} map.ber
+re_b:			fclean bonus
 
-.PHONY: 		all clean fclean re run libft
+run:
+				@./select_map.sh
+
+val:			${NAME}
+				${VALGRIND} ./${NAME} maps/1.cub
+
+r:				${NAME}
+				./${NAME} maps/test.cub
+
+bon:			${NAME_BONUS}
+				./${NAME_BONUS} maps/bonus/bonus_test.cub
+
+.PHONY: 		all clean fclean re re_b run bon r val libft

@@ -56,7 +56,7 @@ void	draw_wall(t_ray ray, t_game *game)
 	}
 	while (start < end)
 	{
-		put_part_of_texture(ray, start, height - i, game);
+		put_part_of_texture(ray, start, i, game);
 		start++;
 		i++;
 	}
@@ -103,6 +103,5 @@ void	raycasting(t_game *game)
 		draw_wall(ray, game);
 		rays ++;
 	}
-	//draw_minimap(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img.img, 0, 0);
 }

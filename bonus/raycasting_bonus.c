@@ -1,4 +1,5 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
+#include <stdio.h>
 
 t_ray	calculate_ray_angle(t_game *game, int rays)
 {
@@ -8,6 +9,8 @@ t_ray	calculate_ray_angle(t_game *game, int rays)
 	camera = 2 * rays / (double)WIN_WIDTH - 1;
 	ray.dir_x = game->pl.dir.x + game->pl.plane.x * camera;
 	ray.dir_y = game->pl.dir.y + game->pl.plane.y * camera;
+	ray.true_dir_y = ray.dir_x / ray.dir_y;
+	ray.true_dir_x = ray.dir_y / ray.dir_x;
 	ray.map_x = (int)game->pl.pos.x;
 	ray.map_y = (int)game->pl.pos.y;
 	ray.num = rays;
@@ -20,18 +23,22 @@ void	put_part_of_texture(t_ray ray, int start, int x_at_wall, t_game *game)
 	int	color;
 
 	height = (int)((WIN_HEIGHT / ray.distance) * 0.8);
-	if (ray.direction == 1)
+	color = 0;
+	if (ray.door_found == 1)
+		color = my_mlx_pixel_get(&game->images.door_data,
+				((x_at_wall / (double)height)) * 64, (int)64 * ray.pixel);
+	else if (ray.direction == 1)
 		color = my_mlx_pixel_get(&game->images.north_data,
 				(x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
-	if (ray.direction == 2)
+	else if (ray.direction == 2)
 		color = my_mlx_pixel_get(&game->images.east_data,
 				(x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
-	if (ray.direction == 3)
+	else if (ray.direction == 3)
 		color = my_mlx_pixel_get(&game->images.south_data,
 				(x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
-	if (ray.direction == 4)
+	else if (ray.direction == 4)
 		color = my_mlx_pixel_get(&game->images.west_data,
-				(x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
+				((x_at_wall / (double)height)) * 64, (int)64 * ray.pixel);
 	my_mlx_pixel_put(&game->img, ray.num, start, color);
 }
 
@@ -56,30 +63,25 @@ void	draw_wall(t_ray ray, t_game *game)
 	}
 	while (start < end)
 	{
-		put_part_of_texture(ray, start, height - i, game);
+		put_part_of_texture(ray, start, i, game);
 		start++;
 		i++;
 	}
 }
 
-void	draw_floor_ceiling(t_game *game, t_data2 img)
+void	free_game_sprites(t_game *game)
 {
-	int	x;
-	int	y;
+	t_sprite	*tmp;
+	t_sprite	*tmp2;
 
-	x = 0;
-	while (x < WIN_WIDTH)
+	if (game->sprites == NULL)
+		return ;
+	tmp = game->sprites;
+	while (tmp != NULL)
 	{
-		y = 0;
-		while (y < WIN_HEIGHT)
-		{
-			if (y < WIN_HEIGHT / 2)
-				my_mlx_pixel_put(&img, x, y, game->images.floor);
-			else
-				my_mlx_pixel_put(&img, x, y, game->images.ceiling);
-			y++;
-		}
-		x++;
+		tmp2 = tmp->next;
+		free(tmp);
+		tmp = tmp2;
 	}
 }
 
@@ -95,14 +97,18 @@ void	raycasting(t_game *game)
 	game->img.img = mlx_new_image(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	game->img.addr = mlx_get_data_addr(game->img.img, &game->img.bits_per_pixel,
 			&game->img.line_length, &game->img.endian);
+	free_game_sprites(game);
+	game->sprites = NULL;
 	draw_floor_ceiling(game, game->img);
 	while (rays < WIN_WIDTH)
 	{
 		ray = calculate_ray_angle(game, rays);
 		ray = calculate_distance_to_wall(game, ray);
 		draw_wall(ray, game);
+		game->distances[rays] = ray.distance;
 		rays ++;
 	}
+	draw_sprites(game);
 	draw_minimap(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img.img, 0, 0);
 }

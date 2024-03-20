@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	convert_color(t_colour color)
 {
@@ -13,21 +13,28 @@ int	convert_color(t_colour color)
 int	ft_atoi_image(char *nptr, int i)
 {
 	long long int	result;
+	int				n;
 
+	n = 0;
 	result = 0;
+	if (nptr[i] < '0' || nptr[i] > '9')
+		return (256);
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
 		if (result > 255)
 			return (256);
 		result = result * 10 + (nptr[i++] - '0');
+		n++;
+		if (n > 3)
+			return (256);
 	}
 	return (result);
 }
 
 int	char_part_of_map(char c)
 {
-	if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'W'
-		|| c == 'E' || c == ' ')
+	if (c == '0' || c == '1' || c == 'D' || c == 'N' || c == 'S' || c == 'W'
+		|| c == 'E' || c == ' ' || c == 'P' || c == 'A')
 		return (1);
 	return (0);
 }
@@ -52,4 +59,24 @@ char	*ft_strldup(char *s, size_t len)
 	}
 	sub_str[i] = '\0';
 	return (sub_str);
+}
+
+/* char	*ft_strldup_save(char *s, size_t len, t_game *game)
+{
+	char	*str;
+
+	str = ft_strldup(s, len);
+	if (str == NULL)
+		ft_error_msg("Malloc error.", game);
+	return (str);
+} */
+
+long long	millitimestamp(void)
+{
+	struct timeval	timeval;
+	long long		microtime;
+
+	gettimeofday(&timeval, NULL);
+	microtime = timeval.tv_sec * 1000LL + timeval.tv_usec / 1000;
+	return (microtime);
 }

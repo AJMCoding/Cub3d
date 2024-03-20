@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	ft_check_input(int argc, char **argv, t_game *game)
 {
@@ -16,7 +16,7 @@ void	ft_check_input(int argc, char **argv, t_game *game)
 	while (argv[1][length + i])
 	{
 		if (argv[1][length + i] != str[i])
-			ft_error_msg("The Map file is not of type .ber", game);
+			ft_error_msg("The Map file is not of type .cub", game);
 		i++;
 	}
 }

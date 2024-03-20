@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	check_for_off_map(t_game *game, int i, int j)
 {
@@ -46,6 +46,12 @@ int	find_color(t_game *game, int i, int j)
 		|| game->map.full[i][j] == 'S' || game->map.full[i][j] == 'E'
 		|| game->map.full[i][j] == 'W')
 		color = 0x00000000;
+	else if (game->map.full[i][j] == 'D')
+		color = 0x00FFFF00;
+	else if (game->map.full[i][j] == 'P')
+		color = 0x00FF00FF;
+	else if (game->map.full[i][j] == 'A')
+		color = 0x0000FFFF;
 	else
 		color = 0x0000FF00;
 	return (color);
