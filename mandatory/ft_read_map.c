@@ -70,7 +70,8 @@ void	find_map(t_game *game, char *str, int i)
 	tmp = find_map_utils(game, str, i);
 	while (str[tmp] != '\0')
 	{
-		if (str[tmp] == '\n' && str[tmp + 1] == '\n')
+		if ((str[tmp] == '\n' && str[tmp + 1] == '\n')
+			|| (str[tmp] == '\n' && str[tmp + 1] == '\0'))
 			ft_error_msg("New line in the map!", game);
 		tmp++;
 	}

@@ -1,9 +1,9 @@
-NO textures/wall.xpm
+C 225,111, 2553
+F 220,111,119
+NO textures/wall_1.xpm
 SO textures/bricks.xpm
 WE textures/wall_4.xpm
-EA textures/wood.xpm
-F 220,111,119
-C 225,111,256
+EA textures/maze.xpm
 
  11111111111111111111111111111111111111
 1000000000000000000000000000000000000001

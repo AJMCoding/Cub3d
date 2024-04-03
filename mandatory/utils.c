@@ -25,7 +25,9 @@ int	convert_color(t_colour color)
 int	ft_atoi_image(char *nptr, int i)
 {
 	long long int	result;
+	int				num;
 
+	num = 0;
 	result = 0;
 	if (nptr[i] < '0' || nptr[i] > '9')
 		return (256);
@@ -34,6 +36,9 @@ int	ft_atoi_image(char *nptr, int i)
 		if (result > 255)
 			return (256);
 		result = result * 10 + (nptr[i++] - '0');
+		num++;
+		if (num > 3)
+			return (256);
 	}
 	return (result);
 }
