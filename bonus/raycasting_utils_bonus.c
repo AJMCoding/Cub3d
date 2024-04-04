@@ -6,7 +6,7 @@
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 15:20:03 by fstark            #+#    #+#             */
-/*   Updated: 2024/03/20 15:20:03 by fstark           ###   ########.fr       */
+/*   Updated: 2024/04/03 18:27:08 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	draw_floor_ceiling(t_game *game, t_data2 img)
 		y = 0;
 		while (y < WIN_HEIGHT)
 		{
-			if (y < WIN_HEIGHT / 2)
+			if (y > WIN_HEIGHT / 2)
 				my_mlx_pixel_put(&img, x, y, game->images.floor);
 			else
 				my_mlx_pixel_put(&img, x, y, game->images.ceiling);
