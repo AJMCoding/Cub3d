@@ -6,7 +6,7 @@
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 15:22:37 by fstark            #+#    #+#             */
-/*   Updated: 2024/04/03 18:26:45 by fstark           ###   ########.fr       */
+/*   Updated: 2024/04/10 14:34:55 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ void	put_part_of_texture(t_ray ray, int start, int x_at_wall, t_game *game)
 		color = my_mlx_pixel_get(&game->images.north_data,
 				(x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
 	if (ray.direction == 2)
-		color = my_mlx_pixel_get(&game->images.east_data,
+		color = my_mlx_pixel_get(&game->images.west_data,
 				(x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
 	if (ray.direction == 3)
 		color = my_mlx_pixel_get(&game->images.south_data,
 				(x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
 	if (ray.direction == 4)
-		color = my_mlx_pixel_get(&game->images.west_data,
+		color = my_mlx_pixel_get(&game->images.east_data,
 				(x_at_wall / (double)height) * 64, (int)64 * ray.pixel);
 	my_mlx_pixel_put(&game->img, ray.num, start, color);
 }

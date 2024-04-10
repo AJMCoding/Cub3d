@@ -6,7 +6,7 @@
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 15:17:25 by fstark            #+#    #+#             */
-/*   Updated: 2024/03/20 15:17:28 by fstark           ###   ########.fr       */
+/*   Updated: 2024/04/10 14:43:56 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ int	add_image(t_game *game, char *str, int i)
 	i += 2;
 	while (str[i] == ' ')
 		i++;
-	while (str[i + j] != '\0' && str[i + j] != '\n'
-		&& str[i + j] != ' ' && str[i + j] != '\t')
+	while (str[i + j] != '\0' && str[i + j] != '\n')
 		j++;
 	add_image_2(game, str + i, j, mode);
 	return (i + j);

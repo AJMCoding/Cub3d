@@ -56,9 +56,11 @@ $(OBJ_DIR):
 $(OBJ_DIR_BONUS):		
 					mkdir -p $(OBJ_DIR_BONUS)
 
-bonus:				$(LIBFT) $(OBJ_DIR_BONUS) $(OBJS_BONUS)
+$(NAME_BONUS):		$(LIBFT) $(OBJ_DIR_BONUS) $(OBJS_BONUS)
 						cp	$(LIBFT) $(NAME_BONUS)
 				        $(CC) $(CFLAGS) $(MINILIBX_FLAGS) $(OBJS_BONUS) -o $(NAME_BONUS) -L$(LIBFT_PATH) -lft -lreadline
+
+bonus:				$(NAME_BONUS)
 
 clean:
 						make -C $(LIBFT_PATH) clean
