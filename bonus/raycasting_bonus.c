@@ -6,7 +6,7 @@
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 15:19:03 by fstark            #+#    #+#             */
-/*   Updated: 2024/03/20 15:19:05 by fstark           ###   ########.fr       */
+/*   Updated: 2024/04/12 17:20:02 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ void	raycasting(t_game *game)
 		mlx_destroy_image(game->mlx_ptr, game->img.img);
 	game->img.img = NULL;
 	game->img.img = mlx_new_image(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
+	if (game->img.img == NULL)
+		ft_error_msg("Mlx_new_image failed.", game);
 	game->img.addr = mlx_get_data_addr(game->img.img, &game->img.bits_per_pixel,
 			&game->img.line_length, &game->img.endian);
 	free_game_sprites(game);
