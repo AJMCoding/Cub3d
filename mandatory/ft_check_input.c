@@ -24,6 +24,10 @@ void	ft_check_input(int argc, char **argv, t_game *game)
 		ft_error_msg("The Map file is missing.", game);
 	str = ".cub";
 	length = ft_strlen(argv[1]) - 4;
+	if (length <= 0)
+		ft_error_msg("Try to use .cub hidden file!", game);
+	else if (argv[1][length - 1] == '/')
+		ft_error_msg("Try to use .cub hidden file!", game);
 	i = 0;
 	while (argv[1][length + i])
 	{

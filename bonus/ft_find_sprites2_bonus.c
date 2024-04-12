@@ -59,9 +59,9 @@ int	find_number_length(char *str, int i, t_game *game, int num)
 		i++;
 		length++;
 	}
-	else if (num == 2)
+	else if (num == 2 || (num == 1 && (str[i] == '\0' || str[i] != '\n' )))
 		ft_error_msg("A colour is not valid.", game);
-	while ((str[i] == ' ' || str[i] == '\t') && num == 2)
+	while ((str[i] == ' ') && num == 2)
 	{
 		length++;
 		i++;
@@ -111,7 +111,7 @@ int	add_colour(t_game *game, char *str, int i)
 	num = 0;
 	mode = find_color_type(str, i);
 	i = ft_duperror_msg(mode, game, i);
-	while (str[i] == ' ' || str[i] == '\t')
+	while (str[i] == ' ')
 		i++;
 	while (str[i] != '\0' && str[i] != '\n')
 	{

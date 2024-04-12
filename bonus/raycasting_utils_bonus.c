@@ -51,3 +51,10 @@ void	draw_floor_ceiling(t_game *game, t_data2 img)
 		x++;
 	}
 }
+
+void	calldraw(t_game *game)
+{
+	draw_sprites(game);
+	draw_minimap(game);
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img.img, 0, 0);
+}

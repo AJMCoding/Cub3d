@@ -6,7 +6,7 @@
 /*   By: fstark <fstark@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 15:21:48 by fstark            #+#    #+#             */
-/*   Updated: 2024/03/20 15:21:49 by fstark           ###   ########.fr       */
+/*   Updated: 2024/04/10 14:24:36 by fstark           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	add_image(t_game *game, char *str, int i)
 	i += 2;
 	while (str[i] == ' ')
 		i++;
-	while (str[i + j] != '\0' && str[i + j] != '\n'
-		&& str[i + j] != ' ' && str[i + j] != '\t')
+	while (str[i + j] != '\0' && str[i + j] != '\n')
 		j++;
 	if (mode == 1 && game->locations.north == NULL)
 		game->locations.north = ft_strldup_save(str + i, j, game);

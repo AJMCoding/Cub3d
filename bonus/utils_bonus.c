@@ -33,9 +33,9 @@ int	ft_atoi_image(char *nptr, int i)
 		return (256);
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
+		result = result * 10 + (nptr[i++] - '0');
 		if (result > 255)
 			return (256);
-		result = result * 10 + (nptr[i++] - '0');
 		n++;
 		if (n > 3)
 			return (256);
