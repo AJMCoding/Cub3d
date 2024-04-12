@@ -5,7 +5,7 @@ EA textures/wall_4.xpm
 WE textures/wall_3.xpm
 A1 textures/window_1.xpm
 A2 textures/window_2.xpm
-SP textures/bookshelve.xpm 
+SP textures/bookshelve.xpm
 
 F 51,198,255
 C 51,   198, 111

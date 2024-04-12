@@ -281,5 +281,6 @@ int				check_all_found(t_game *game);
 int				ft_duperror_msg(int mode, t_game *game, int i);
 int				find_map_utils(t_game *game, char *str, int i);
 int				ft_check_line(char *str);
+void			calldraw(t_game *game);
 
 #endif

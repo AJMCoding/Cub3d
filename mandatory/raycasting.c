@@ -105,6 +105,8 @@ void	raycasting(t_game *game)
 		mlx_destroy_image(game->mlx_ptr, game->img.img);
 	game->img.img = NULL;
 	game->img.img = mlx_new_image(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
+	if (game->img.img == NULL)
+		ft_error_msg("Mlx_new_image failed.", game);
 	game->img.addr = mlx_get_data_addr(game->img.img, &game->img.bits_per_pixel,
 			&game->img.line_length, &game->img.endian);
 	draw_floor_ceiling(game, game->img);

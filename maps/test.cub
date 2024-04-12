@@ -3,9 +3,9 @@ NO      textures/wall_1.xpm
 SO    textures/wall_2.xpm
 
 
-F 51,   198,   100
+F 51,   198,   111
 
-C 51,198, 100
+C 50,  198, 255
 
 
 WE textures/wall_3.xpm
